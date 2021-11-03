@@ -2,7 +2,7 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
 
 public class ShellText {
     String shapeName;
-    String collectionName;
+    String graphName;
     Action actionType;
     Point point1;
     Point point2;
@@ -40,6 +40,8 @@ public class ShellText {
                 case 5:
                     num5 = stringArr[i];
                     break;
+                default:
+                    break;
             }
         }
         
@@ -48,7 +50,8 @@ public class ShellText {
             case CIRCLE:
                 System.out.println("111");
                 actionType = Action.CIRCLE;
-                point1 =
+                
+                point1 = 
                 break;
             case LINE:
                 System.out.println("222");
