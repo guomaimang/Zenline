@@ -18,7 +18,7 @@ public class Application {
         while (guard){
             String command = readUserInput("Please enter your command: ");
             ShellText shellText = new ShellText(command);
-            if (shellText.actionType == Action.WARNING){
+            if (shellText.actionType == Action.WARNING || checkCompliance()){
                 System.out.println("Your command is not correct, please try again!");
             }
         }
