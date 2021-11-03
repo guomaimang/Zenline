@@ -103,6 +103,7 @@ public class ShellText {
                 graphList = Arrays.copyOfRange(shellList,1,shellList.length-1);
 
             default:
+                actionType = Action.
                 break;
         }
     }
@@ -125,6 +126,24 @@ public class ShellText {
 
 
     public static void main(String[] arg){
+
+        ShellText a = new ShellText("RECTANGLE      changfangxing       3   2   8 10");
+        System.out.print(a.actionType + " ");
+        System.out.print(a.graphName+ " ");
+        System.out.print(a.point1.x+ " ");
+        System.out.print(a.point1.y+ " ");
+        System.out.print(a.distance1+ " ");
+        System.out.println(a.distance2+ " ");
+
+      
+        ShellText b = new ShellText("LINE xian 1 2 4 10");
+        System.out.print(b.actionType + " ");
+        System.out.print(b.graphName+ " ");
+        System.out.print(b.point1.x+ " ");
+        System.out.print(b.point1.y+ " ");
+        System.out.print(b.point2.x+ " ");
+        System.out.println(b.point2.y+ " ");
+
         ShellText c= new ShellText("CIRCLE       yi       3   2   8");
         System.out.print(c.actionType + " ");
         System.out.print(c.graphName+ " ");
@@ -132,15 +151,62 @@ public class ShellText {
         System.out.print(c.point1.y+ " ");
         System.out.println(c.distance1+ " ");
 
-        ShellText b= new ShellText("GROUP   3   yusdh 2 123 12 skx 1 32 1 8 9");
-        System.out.print(b.actionType + " ");
-        for (int i = 0; i < b.graphList.length; i++) {
-            System.out.print(b.graphList[i] + " ");
+
+        ShellText d= new ShellText("   SQUARE zfx   3   4   8");
+        System.out.print(d.actionType + " ");
+        System.out.print(d.graphName+ " ");
+        System.out.print(d.point1.x+ " ");
+        System.out.print(d.point1.y+ " ");
+        System.out.println(d.distance1+ " ");
+
+        ShellText e= new ShellText("   UNGROUP ug  ");
+        System.out.print(e.actionType + " ");
+        System.out.println(e.shapeName+ " ");
+
+        ShellText f= new ShellText("BOUNDINGBOX bb  ");
+        System.out.print(f.actionType + " ");
+        System.out.println(f.shapeName+ " ");
+
+        ShellText g= new ShellText("MOVE ug  3 3");
+        System.out.print(g.actionType + " ");
+        System.out.print(g.shapeName+ " ");
+        System.out.print(g.distance1+ " ");
+        System.out.println(g.distance2+ " ");
+
+        ShellText h= new ShellText("PICK_AND_MOVE 12 23 1 4  ");
+        System.out.print(h.actionType + " ");
+        System.out.print(h.point1.x+ " ");
+        System.out.print(h.point1.y+ " ");
+        System.out.print(h.distance1+ " ");
+        System.out.println(h.distance2+ " ");
+
+        ShellText j= new ShellText("INTERSECT ins dyg deg  ");
+        System.out.print(j.actionType + " ");
+        for (int i = 0; i < j.graphList.length; i++) {
+            System.out.print(j.graphList[i] + " ");
         }
+        System.out.println(" ");
 
+        ShellText k= new ShellText("LIST list  ");
+        System.out.print(k.actionType + " ");
+        System.out.println(k.shapeName+ " ");
 
+        ShellText l= new ShellText("UNDO  ");
+        System.out.println(l.actionType + " ");
 
+        ShellText m= new ShellText("REDO");
+        System.out.println(m.actionType + " ");
 
+        ShellText n= new ShellText("QUIT");
+        System.out.println(n.actionType + " ");
+
+        ShellText o= new ShellText("LISTALL");
+        System.out.println(o.actionType + " ");
+
+        ShellText p= new ShellText("GROUP           3   yusdh 2 123 12 skx 1 32 1 8 9");
+        System.out.print(p.actionType + " ");
+        for (int q = 0; q < p.graphList.length; q++) {
+            System.out.print(p.graphList[q] + " ");
     }
 
 
