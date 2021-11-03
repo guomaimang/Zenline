@@ -103,7 +103,7 @@ public class ShellText {
                 graphList = Arrays.copyOfRange(shellList,1,shellList.length-1);
 
             default:
-                actionType = Action.
+                actionType = Action.WARNING;
                 break;
         }
     }
@@ -210,4 +210,5 @@ public class ShellText {
     }
 
 
+}
 }
