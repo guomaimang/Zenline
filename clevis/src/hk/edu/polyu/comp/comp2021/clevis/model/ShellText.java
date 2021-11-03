@@ -6,8 +6,7 @@ public class ShellText {
     Action actionType;
     Point point1;
     Point point2;
-    String Graph1;
-    String Graph2;
+    String graph;
     Double Distance1;
     Double Distance2;
     Double Distance3;
