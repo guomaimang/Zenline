@@ -1,17 +1,16 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 public class ShellText {
-    String shapeName;  //set of graph
-    String graphName;  //one graph
-    Action actionType;
-    Point point1;
-    Point point2;
-    String[] graphList;
-    Double distance1;
-    Double distance2;
+    public String shapeName;  //set of graph
+    public String graphName;  //one graph
+    public Action actionType;
+    public Point point1;
+    public Point point2;
+    public String[] graphList;
+    public Double distance1;
+    public Double distance2;
 
 
     public ShellText(String shell){
@@ -127,6 +126,7 @@ public class ShellText {
 
 
     public static void main(String[] arg){
+
         ShellText a = new ShellText("RECTANGLE      changfangxing       3   2   8 10");
         System.out.print(a.actionType + " ");
         System.out.print(a.graphName+ " ");
@@ -135,6 +135,7 @@ public class ShellText {
         System.out.print(a.distance1+ " ");
         System.out.println(a.distance2+ " ");
 
+      
         ShellText b = new ShellText("LINE xian 1 2 4 10");
         System.out.print(b.actionType + " ");
         System.out.print(b.graphName+ " ");
@@ -143,13 +144,13 @@ public class ShellText {
         System.out.print(b.point2.x+ " ");
         System.out.println(b.point2.y+ " ");
 
-
-        ShellText c= new ShellText("CIRCLE yuan       3   2   8");
+        ShellText c= new ShellText("CIRCLE       yi       3   2   8");
         System.out.print(c.actionType + " ");
         System.out.print(c.graphName+ " ");
         System.out.print(c.point1.x+ " ");
         System.out.print(c.point1.y+ " ");
         System.out.println(c.distance1+ " ");
+
 
         ShellText d= new ShellText("   SQUARE zfx   3   4   8");
         System.out.print(d.actionType + " ");
@@ -206,12 +207,6 @@ public class ShellText {
         System.out.print(p.actionType + " ");
         for (int q = 0; q < p.graphList.length; q++) {
             System.out.print(p.graphList[q] + " ");
-
-        }
-
-
-
-
     }
 
 
