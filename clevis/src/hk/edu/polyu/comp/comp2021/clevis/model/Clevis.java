@@ -4,4 +4,9 @@ public class Clevis {
 
     public Clevis(){}
 
+    public void listElement(){}
+
+    public int getNum(){return 0;}
+
+    public void printClevis(){};
 }

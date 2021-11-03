@@ -1,0 +1,47 @@
+package hk.edu.polyu.comp.comp2021.clevis.model;
+
+public class Square extends Graph{
+    double width;
+    double height;
+
+    public Square(Point p, double l) {
+        location = p;
+        width = l;
+        height = l;
+
+        xMin = location.x;
+        xMax = location.x + width;
+        yMin = location.y - height;
+        yMax = location.y;
+    }
+
+    @Override
+    public boolean isIntersected(Rectangle that) {
+        return (this.xMin > that.xMax || that.xMin > this.xMax ||
+                this.yMin > that.yMax || that.yMin > this.yMax );
+    }
+
+    @Override
+    public boolean isIntersected(Circle that) {
+        return false;
+    }
+
+    @Override
+    public boolean isIntersected(Line that) {
+        return false;
+    }
+
+    @Override
+    public boolean isIntersected(Square that) {
+        return (this.xMin > that.xMax || that.xMin > this.xMax ||
+                this.yMin > that.yMax || that.yMin > this.yMax );
+    }
+
+    @Override
+    public boolean isContained(Point p) {
+        return location.x - 0.05 < p.x &&
+                p.x < location.x + width + 0.05 &&
+                p.y < location.y + 0.05 &&
+                location.y - height - 0.05 < p.y;
+    }
+}
