@@ -1,17 +1,16 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 public class ShellText {
-    String shapeName;  //set of graph
-    String graphName;  //one graph
-    Action actionType;
-    Point point1;
-    Point point2;
-    String[] graphList;
-    Double distance1;
-    Double distance2;
+    public String shapeName;  //set of graph
+    public String graphName;  //one graph
+    public Action actionType;
+    public Point point1;
+    public Point point2;
+    public String[] graphList;
+    public Double distance1;
+    public Double distance2;
 
 
     public ShellText(String shell){
@@ -127,13 +126,13 @@ public class ShellText {
 
     public static void main(String[] arg){
         ShellText c= new ShellText("CIRCLE       yi       3   2   8");
-        ShellText b= new ShellText("GROUP           3   yusdh 2 123 12 skx 1 32 1 8 9");
         System.out.print(c.actionType + " ");
         System.out.print(c.graphName+ " ");
         System.out.print(c.point1.x+ " ");
         System.out.print(c.point1.y+ " ");
         System.out.println(c.distance1+ " ");
 
+        ShellText b= new ShellText("GROUP   3   yusdh 2 123 12 skx 1 32 1 8 9");
         System.out.print(b.actionType + " ");
         for (int i = 0; i < b.graphList.length; i++) {
             System.out.print(b.graphList[i] + " ");
