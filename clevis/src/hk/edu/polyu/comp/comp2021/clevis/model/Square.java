@@ -44,4 +44,9 @@ public class Square extends Graph{
                 p.y < location.y + 0.05 &&
                 location.y - height - 0.05 < p.y;
     }
+
+    @Override
+    public void listSelf() {
+
+    }
 }

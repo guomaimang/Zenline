@@ -9,20 +9,14 @@ public abstract class Graph {
     double yMin;
     double yMax;
 
-    private boolean isDelete;
+    boolean isDelete;
     int zcode;
 
     public void move(double dx,double dy){
         location = new Point(dx+location.x,dy+location.y);
     }
     public abstract boolean isContained(Point p);
-
-    public void doDelete(){
-        isDelete = true;
-    }
-    public void recover(){
-        isDelete = false;
-    }
+    public abstract void listSelf();
 
     public abstract boolean isIntersected(Rectangle that);
     public abstract boolean isIntersected(Circle that);

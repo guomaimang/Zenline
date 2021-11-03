@@ -6,6 +6,10 @@ public class Line extends Graph{
         return false;
     }
 
+    @Override
+    public void listSelf() {
+    }
+
 
     @Override
     public boolean isIntersected(Rectangle that) {

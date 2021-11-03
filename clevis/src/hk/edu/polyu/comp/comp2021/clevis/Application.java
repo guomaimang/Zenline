@@ -2,7 +2,9 @@ package hk.edu.polyu.comp.comp2021.clevis;
 
 import hk.edu.polyu.comp.comp2021.clevis.model.Action;
 import hk.edu.polyu.comp.comp2021.clevis.model.Clevis;
+import hk.edu.polyu.comp.comp2021.clevis.model.LogMech;
 import hk.edu.polyu.comp.comp2021.clevis.model.ShellText;
+
 import java.util.Scanner;
 
 public class Application {
@@ -20,11 +22,13 @@ public class Application {
             ShellText shellText = new ShellText(command);
             if (shellText.actionType == Action.WARNING || checkCompliance(shellText)){
                 System.out.println("Your command is not correct, please try again!");
+            }else if (shellText.actionType == null) {
+                System.out.println("System Error! Please connect hirsun@qq.com");
+                guard = false;
             }
+            else opc(shellText);
         }
     }
-
-
 
     public static String readUserInput(String msg){
         // Idea from COMP2021@PolyU COMP
@@ -32,12 +36,18 @@ public class Application {
         Scanner scanIn = new Scanner(System.in);
         String inputString = scanIn.nextLine();
         scanIn.close();
+        // Every command will be take down!
+        LogMech.write(inputString);
         return inputString;
     }
 
     public static boolean checkCompliance(ShellText s){
         return false;
-    };
+    }
 
+    public static void opc(ShellText s){
+        // to-do block
+
+    }
 
 }

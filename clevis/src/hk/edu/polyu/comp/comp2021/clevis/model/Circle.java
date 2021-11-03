@@ -7,6 +7,10 @@ public class Circle extends Graph{
     }
 
     @Override
+    public void listSelf() {
+    }
+
+    @Override
     public boolean isIntersected(Rectangle that) {
         return false;
     }

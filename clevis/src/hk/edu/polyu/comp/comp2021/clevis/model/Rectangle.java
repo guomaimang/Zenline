@@ -14,7 +14,8 @@ public class Rectangle extends Graph {
         yMin = location.y - height;
         yMax = location.y;
     }
-
+    @Override
+    public void listSelf(){}
 
     @Override
     public boolean isIntersected(Rectangle that) {
