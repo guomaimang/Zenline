@@ -1,69 +1,147 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
+import java.sql.Array;
+import java.util.Arrays;
+
 public class ShellText {
-    String shapeName;
-    String graphName;
+    String shapeName;  //set of graph
+    String graphName;  //one graph
     Action actionType;
     Point point1;
     Point point2;
     String[] graphList;
-    Double Distance1;
-    Double Distance2;
-    Double Distance3;
+    Double distance1;
+    Double distance2;
+
 
     public ShellText(String shell){
-        String num1 = "";
-        String num2 = "";
-        String num3 = "";
-        String num4 = "";
-        String num5 = "";
-        String action = "";
 
-        String[] stringArr = shell.split("\\s");
-        for (int i = 0; i < stringArr.length; i++) {
-            switch (i){
-                case 0:
-                    action = stringArr[i];
-                    break;
-                case 1:
-                    num1 = stringArr[i];
-                    break;
-                case 2:
-                    num2 = stringArr[i];
-                    break;
-                case 3:
-                    num3 = stringArr[i];
-                    break;
-                case 4:
-                    num4 = stringArr[i];
-                    break;
-                case 5:
-                    num5 = stringArr[i];
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-        Action at = Action.valueOf(action);
+        String[] shellList = fen(shell);
+
+        Action at = Action.valueOf(shellList[0]);
         switch(at){
-            case CIRCLE:
-                System.out.println("111");
-                actionType = Action.CIRCLE;
-                
-                point1 = 
-                break;
-            case LINE:
-                System.out.println("222");
+            case RECTANGLE:
+                actionType = Action.RECTANGLE;
+                graphName = shellList[1];
+                point1 = new Point(Double.valueOf(shellList[2]),Double.valueOf(shellList[3]));
+                distance1 = Double.valueOf(shellList[4]);
+                distance2 = Double.valueOf(shellList[5]);
                 break;
 
+            case LINE:
+                actionType = Action.LINE;
+                graphName = shellList[1];
+                point1 = new Point(Double.valueOf(shellList[2]),Double.valueOf(shellList[3]));
+                point2 = new Point(Double.valueOf(shellList[4]),Double.valueOf(shellList[5]));
+                break;
+
+            case CIRCLE:
+                actionType = Action.CIRCLE;
+                graphName = shellList[1];
+                point1 = new Point(Double.valueOf(shellList[2]),Double.valueOf(shellList[3]));
+                distance1 = Double.valueOf(shellList[4]);
+                break;
+
+            case SQUARE:
+                actionType = Action.SQUARE;
+                graphName = shellList[1];
+                point1 = new Point(Double.valueOf(shellList[2]),Double.valueOf(shellList[3]));
+                distance1 = Double.valueOf(shellList[4]);
+                break;
+
+            case UNGROUP:
+                actionType = Action.UNGROUP;
+                shapeName = shellList[1];
+                break;
+
+            case BOUNDINGBOX:
+                actionType = Action.BOUNDINGBOX;
+                shapeName = shellList[1];
+                break;
+
+            case MOVE:
+                actionType = Action.MOVE;
+                shapeName = shellList[1];
+                distance1 = Double.valueOf(shellList[2]);
+                distance2 = Double.valueOf(shellList[3]);
+                break;
+
+            case PICK_AND_MOVE:
+                actionType = Action.PICK_AND_MOVE;
+                point1 = new Point(Double.valueOf(shellList[1]),Double.valueOf(shellList[2]));
+                distance1 = Double.valueOf(shellList[3]);
+                distance2 = Double.valueOf(shellList[4]);
+                break;
+
+            case INTERSECT:
+                actionType = Action.INTERSECT;
+                graphList = new String[]{shellList[1], shellList[2]};
+                break;
+
+            case LIST:
+                actionType = Action.LIST;
+                shapeName = shellList[1];
+                break;
+
+            case UNDO:
+                actionType = Action.UNDO;
+                break;
+
+            case REDO:
+                actionType = Action.REDO;
+                break;
+
+            case QUIT:
+                actionType = Action.QUIT;
+                break;
+
+            case LISTALL:
+                actionType = Action.LISTALL;
+                break;
+
+            case GROUP:
+                actionType = Action.GROUP;
+                graphList = Arrays.copyOfRange(shellList,1,shellList.length-1);
+
+            default:
+                break;
         }
     }
 
+    public static String[] fen(String shell){
+        int i = 1;
+        shell = shell.trim();
+
+        String [] spString = shell.split("\\s+");
+        for(String ignored : spString){
+            i++;
+        }
+        String[] a = new String[i];
+        int j = 0;
+        for(String str : spString){
+            a[j++] = str;
+        }
+        return a;
+    }
+
+
     public static void main(String[] arg){
-        // ShellText c= new ShellText("CIRCLE 5 3 8");
-        ShellText a = new ShellText("CIRCLE");
-        System.out.println(a.actionType);
+        ShellText c= new ShellText("CIRCLE       yi       3   2   8");
+        ShellText b= new ShellText("GROUP           3   yusdh 2 123 12 skx 1 32 1 8 9");
+        System.out.print(c.actionType + " ");
+        System.out.print(c.graphName+ " ");
+        System.out.print(c.point1.x+ " ");
+        System.out.print(c.point1.y+ " ");
+        System.out.println(c.distance1+ " ");
+
+        System.out.print(b.actionType + " ");
+        for (int i = 0; i < b.graphList.length; i++) {
+            System.out.print(b.graphList[i] + " ");
+        }
+
+
+
+
     }
 
 
