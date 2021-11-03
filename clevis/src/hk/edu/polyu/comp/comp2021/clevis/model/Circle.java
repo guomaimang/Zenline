@@ -7,11 +7,6 @@ public class Circle extends Graph{
     }
 
     @Override
-    public double[] mostNum() {
-        return new double[0];
-    }
-
-    @Override
     public boolean isIntersected(Rectangle that) {
         return false;
     }
