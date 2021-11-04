@@ -4,6 +4,7 @@ public class Circle extends Graph{
     double r;
 
     public Circle(Point p,double r){
+        double a;
 
     }
 
