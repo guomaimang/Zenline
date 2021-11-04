@@ -6,14 +6,21 @@ public class Shape {
 
     public String name;
     public boolean isDelete;
+    public boolean isGroup;
+    public ArrayList<Shape> shapes = new ArrayList<>();
     public ArrayList<Graph> graphs = new ArrayList<>();
 
     public void listSelf() {}
-    public Shape(String[] graphList){
-        for (int i = 0; i < graphList.length-1; i++) {
-            if(Clevis.findGraph(graphList[i]) != null) graphs.add(Clevis.findGraph(graphList[i]));
-            }
-        }
 
+    public void group(String[] shapeList) {
+        for (int i = 0; i < shapeList.length - 1; i++) {
+            if (Clevis.findGraph(shapeList[i]) != null) graphs.add(Clevis.findGraph(shapeList[i]));
+            if (Clevis.findShape(shapeList[i]) != null) shapes.add(Clevis.findShape(shapeList[i]));
+        }
+        isGroup = true;
     }
+    public void ungroup(){
+        isGroup = false;
+    }
+}
 

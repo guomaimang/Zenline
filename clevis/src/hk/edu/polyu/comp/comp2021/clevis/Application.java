@@ -1,20 +1,18 @@
 package hk.edu.polyu.comp.comp2021.clevis;
 
-import hk.edu.polyu.comp.comp2021.clevis.model.Action;
-import hk.edu.polyu.comp.comp2021.clevis.model.Clevis;
-import hk.edu.polyu.comp.comp2021.clevis.model.LogMech;
-import hk.edu.polyu.comp.comp2021.clevis.model.ShellText;
+import hk.edu.polyu.comp.comp2021.clevis.model.*;
+import jdk.jshell.JShell;
 
 import java.util.Scanner;
 
 public class Application {
-
+    public static boolean guard = true;
     public static void main(String[] args){
 
         Clevis clevis = new Clevis();
         // Initialize and utilize the system
 
-        boolean guard = true;
+
         System.out.println("Welcome to use Clevis!");
 
         while (guard){
@@ -45,9 +43,37 @@ public class Application {
         return false;
     }
 
+    // to-do block
+    // RECTANGLE,LINE,CIRCLE,SQUARE,GROUP,UNGROUP,BOUNDINGBOX,DELETE,MOVE,PICK_AND_MOVE,INTERSECT,LIST,LISTALL,QUIT,REDO,UNDO
     public static void opc(ShellText s){
-        // to-do block
-
+        if (s.actionType == Action.RECTANGLE){
+            // Check if command could be run
+            if (Clevis.findGraphWithDel(s.graphName) != null || Clevis.findShapeWithDel(s.shapeName) != null) {
+                System.out.println("Your command is not correct, please try again!");
+                return;
+            }
+            // run command
+            Clevis.addGraph(new Rectangle(s.point1, s.distance1, s.distance2));
+            // make snapshot
+            VersionController.snapshot(s);
+        }
+        else if (s.actionType == Action.LINE){}
+        else if (s.actionType == Action.CIRCLE){}
+        else if (s.actionType == Action.GROUP){}
+        else if (s.actionType == Action.UNGROUP){}
+        else if (s.actionType == Action.BOUNDINGBOX){}
+        else if (s.actionType == Action.DELETE){}
+        else if (s.actionType == Action.MOVE){}
+        else if (s.actionType == Action.INTERSECT){}
+        else if (s.actionType == Action.LIST){}
+        else if (s.actionType == Action.LISTALL){}
+        else if (s.actionType == Action.REDO){}
+        else if (s.actionType == Action.UNDO){}
+        else {
+            guard = false;
+            System.out.println("Bye!");
+            LogMech.outputHtml();
+            LogMech.outputTxt();
+        }
     }
-
 }

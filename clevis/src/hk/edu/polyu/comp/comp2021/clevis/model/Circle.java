@@ -1,14 +1,19 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
 public class Circle extends Graph{
+    double r;
+
+    public Circle(Point p,double r){
+
+    }
+
     @Override
     public boolean isContained(Point p) {
         return false;
     }
 
     @Override
-    public void listSelf() {
-    }
+    public void listSelf() {}
 
     @Override
     public boolean isIntersected(Rectangle that) {

@@ -15,34 +15,20 @@ public class Clevis {
         shapes.add(c);
     }
 
-    public static boolean deleteShape(String shapeName){
+    public static void deleteShape(String shapeName){
         for (int i = 0; i < graphs.size()-1 ; i++) {
-            if (graphs.get(i).name.equals(shapeName)) return deleteGraph(graphs.get(i));
+            if (graphs.get(i).name.equals(shapeName))  deleteGraph(graphs.get(i));
         }
         for (int i = 0; i < shapes.size()-1; i++) {
-            if(shapes.get(i).name.equals(shapeName)) return deleteCollection(shapes.get(i));
-        }
-        System.out.println("There is not such a shape!");
-        return false;
-    } // This boolean is used for take down version
-    public static boolean deleteGraph(Graph g){
-        if (g.isDelete){
-            System.out.println("Delete Successful!");
-            return true;
-        }else{
-            System.out.println("There is not such a shape! You have already delete it!");
-            return false;
+            if(shapes.get(i).name.equals(shapeName))  deleteCollection(shapes.get(i));
         }
     }
-    public static boolean deleteCollection(Shape g){
-        if (g.isDelete){
-            System.out.println("Delete Successful!");
-            return true;
-        }else{
-            System.out.println("There is not such a shape! You have already delete it!");
-            return false;
-        }
-    }
+    public static void deleteGraph(Graph g){
+        if (g.isDelete) System.out.println("Delete Successful!");
+        else System.out.println("There is not such a shape! You have already delete it!");}
+    public static void deleteCollection(Shape g){
+        if (g.isDelete) System.out.println("Delete Successful!");
+        else System.out.println("There is not such a shape! You have already delete it!");}
 
     public static boolean listShape(String shapeName){
         for (int i = 0; i < graphs.size()-1 ; i++) {
@@ -67,12 +53,35 @@ public class Clevis {
             if (graphs.get(i).name.equals(name)){
                 if (!graphs.get(i).isDelete) return graphs.get(i);
                 else {
-                    System.out.println("This element has been deleted! You can't do this operation!");
+                    System.out.println("This graph has been deleted! You can't do this operation!");
                     return null;
                 }
             }
         }
         System.out.println("There isn't a graph named such");
+        return null;
+    }
+    public static Shape findShape(String name) {
+        for (int i = 0; i < shapes.size()-1; i++) {
+            if (shapes.get(i).name.equals(name)){
+                if (!shapes.get(i).isDelete) return shapes.get(i);
+                else {
+                    System.out.println("This shape has been deleted! You can't do this operation!");
+                    return null;
+                }
+            }
+        }
+        System.out.println("There isn't a shape named such");
+        return null;
+    }
+    public static Graph findGraphWithDel(String name){
+        for (int i = 0; i < graphs.size()-1; i++) {
+            if (graphs.get(i).name.equals(name)) return graphs.get(i);}
+        return null;
+    }
+    public static Shape findShapeWithDel(String name){
+        for (int i = 0; i < shapes.size()-1; i++) {
+            if (shapes.get(i).name.equals(name)) return shapes.get(i);}
         return null;
     }
 
