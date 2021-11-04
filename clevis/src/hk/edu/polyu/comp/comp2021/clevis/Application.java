@@ -48,7 +48,7 @@ public class Application {
     public static void opc(ShellText s){
         if (s.actionType == Action.RECTANGLE){
             // Check if command could be run
-            if (Clevis.findGraphWithDel(s.graphName) != null || Clevis.findShapeWithDel(s.shapeName) != null) {
+            if (Clevis.findGraphWithDel(s.shapeName) != null || Clevis.findShapeWithDel(s.shapeName) != null) {
                 System.out.println("Your command is not correct, please try again!");
                 return;
             }
