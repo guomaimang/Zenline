@@ -22,5 +22,8 @@ public class Shape {
     public void ungroup(){
         isGroup = false;
     }
+    public void boundingbox(){}
+    public boolean intersect(Shape s){return false;}
+    public boolean intersect(Graph g){return false;}
 }
 

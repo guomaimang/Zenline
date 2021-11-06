@@ -10,7 +10,11 @@ public abstract class Graph {
     double yMax;
 
     boolean isDelete;
-    static int zcode = 0;
+    static int zcode = -1;
+
+    public Graph(){
+        zcode++;
+    }
 
     public void move(double dx,double dy){
         location = new Point(dx+location.x,dy+location.y);

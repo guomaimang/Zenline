@@ -6,13 +6,11 @@ import jdk.jshell.JShell;
 import java.util.Scanner;
 
 public class Application {
+
+    // if guard the process
     public static boolean guard = true;
+
     public static void main(String[] args){
-
-        Clevis clevis = new Clevis();
-        // Initialize and utilize the system
-
-
         System.out.println("Welcome to use Clevis!");
 
         while (guard){
