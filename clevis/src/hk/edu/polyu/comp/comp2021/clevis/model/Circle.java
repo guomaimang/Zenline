@@ -5,7 +5,8 @@ public class Circle extends Graph{
 
 
     public Circle(Point p,double r){
-
+        location = p;
+        this.r = r;
     }
 
     @Override

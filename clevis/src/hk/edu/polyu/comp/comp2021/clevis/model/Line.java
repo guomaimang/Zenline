@@ -6,7 +6,6 @@ public class Line extends Graph{
     public Line(Point p1,Point p2){
         location = p1;
         location2 = p2;
-
     }
 
     @Override
@@ -20,7 +19,8 @@ public class Line extends Graph{
 
     @Override
     public void move(double dx, double dy) {
-
+        location = new Point(location.x+dx, location.y+dy);
+        location2 = new Point(location2.x+dx, location2.y+dy);
     }
 
     @Override

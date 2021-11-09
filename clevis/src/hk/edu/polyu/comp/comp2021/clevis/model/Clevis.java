@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Clevis {
 
@@ -7,7 +8,6 @@ public class Clevis {
 
     private static ArrayList<Graph> graphs = new ArrayList<>();
     private static ArrayList<Shape> shapes = new ArrayList<>();
-
     public static void addGraph(Graph g){
         graphs.add(g);
     }
