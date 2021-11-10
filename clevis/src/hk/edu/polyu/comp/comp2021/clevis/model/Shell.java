@@ -4,69 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Shell {
-    public String actionType;
-    public String name;
-    public Point point1;
-    public Point point2;
-    public ArrayList<String> shapeList;
-    public Double distance1;
-    public Double distance2;
-
-    public String getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Point getPoint1() {
-        return point1;
-    }
-
-    public void setPoint1(Point point1) {
-        this.point1 = point1;
-    }
-
-    public Point getPoint2() {
-        return point2;
-    }
-
-    public void setPoint2(Point point2) {
-        this.point2 = point2;
-    }
-
-    public ArrayList<String> getShapeList() {
-        return shapeList;
-    }
-
-    public void setShapeList(ArrayList<String> shapeList) {
-        this.shapeList = shapeList;
-    }
-
-    public Double getDistance1() {
-        return distance1;
-    }
-
-    public void setDistance1(Double distance1) {
-        this.distance1 = distance1;
-    }
-
-    public Double getDistance2() {
-        return distance2;
-    }
-
-    public void setDistance2(Double distance2) {
-        this.distance2 = distance2;
-    }
+    String actionType;
+    String name;
+    Point point1;
+    Point point2;
+    ArrayList<String> shapeList;
+    Double distance1;
+    Double distance2;
 
     // throws IndexOutOfBoundsException, IllegalArgumentException, NumberFormatException
     public Shell(String s) {
@@ -229,6 +173,68 @@ public class Shell {
             System.out.println("You provide a illegal number!");
             throw new NumberFormatException();}
         return num;
+    }
+
+
+
+
+
+
+    // -------------Standardization--------------
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Point getPoint1() {
+        return point1;
+    }
+
+    public void setPoint1(Point point1) {
+        this.point1 = point1;
+    }
+
+    public Point getPoint2() {
+        return point2;
+    }
+
+    public void setPoint2(Point point2) {
+        this.point2 = point2;
+    }
+
+    public ArrayList<String> getShapeList() {
+        return shapeList;
+    }
+
+    public void setShapeList(ArrayList<String> shapeList) {
+        this.shapeList = shapeList;
+    }
+
+    public Double getDistance1() {
+        return distance1;
+    }
+
+    public void setDistance1(Double distance1) {
+        this.distance1 = distance1;
+    }
+
+    public Double getDistance2() {
+        return distance2;
+    }
+
+    public void setDistance2(Double distance2) {
+        this.distance2 = distance2;
     }
 
 }
