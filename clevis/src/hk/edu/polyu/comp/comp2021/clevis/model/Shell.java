@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Shell {
-    String actionType;
-    String name;
-    Point point1;
-    Point point2;
-    ArrayList<String> shapeList;
-    Double distance1;
-    Double distance2;
+    private final String actionType;
+    private String name;
+    private Point point1;
+    private Point point2;
+    private ArrayList<String> shapeList;
+    private Double distance1;
+    private Double distance2;
 
     // throws IndexOutOfBoundsException, IllegalArgumentException, NumberFormatException
     public Shell(String s) {
@@ -87,6 +87,7 @@ public class Shell {
                 distance2 = Double.parseDouble(keyword.get(4));
                 break;
             case "intersect":
+                if (keyword.size() > 3) throw new IllegalArgumentException();
                 if (safeName(keyword.get(1)).equals(safeName(keyword.get(2)))){
                     System.out.println("Same Shape!");
                     throw new IllegalArgumentException();
@@ -100,6 +101,8 @@ public class Shell {
                     System.out.println("One shape doesn't exist!");
                     throw new  IllegalArgumentException();
                 }
+                shapeList.add(keyword.get(1));
+                shapeList.add(keyword.get(2));
                 break;
             case "move":
                 name = safeName(keyword.get(1));
@@ -122,7 +125,8 @@ public class Shell {
         watcher();
     }
 
-    public void watcher(){
+    // a tool to see attribute
+    void watcher(){
         System.out.println(actionType);
         if (name != null) System.out.println(name);
         if (point1 != null) System.out.println(point1.x + " " + point1.y);
@@ -130,12 +134,12 @@ public class Shell {
         for (int i = 0; i < shapeList.size(); i++) {
             System.out.print(shapeList.get(i) + " ");
         }
+        System.out.println("");
         if (point1 != null) System.out.println(distance1);
         if (point1 != null) System.out.println(distance2);
     }
-
     // Name is beginning with alphabet and with (letter or number)
-    public String safeName(String s){
+    String safeName(String s){
         char c = s.charAt(0);
         boolean sLetter = (c >= 97  && c <= 122);
         boolean bLetter = (c >= 65  && c <= 90 );
@@ -155,9 +159,8 @@ public class Shell {
         }
         return s;
     }
-
     // Name is not conflict with exist
-    public String cfName(String s){
+    String cfName(String s){
         if (Clevis.findShapeWithDel(s) == null && Clevis.findGraphWithDel(s) == null)
             return safeName(s);
         else {
@@ -165,9 +168,8 @@ public class Shell {
             throw new IllegalArgumentException();
         }
     }
-
     // ensure a num is positive
-    public double safePosiNum(String s){
+    double safePosiNum(String s){
         double num = Double.parseDouble(s);
         if (num<=0) {
             System.out.println("You provide a illegal number!");
@@ -176,65 +178,26 @@ public class Shell {
     }
 
 
-
-
-
-
     // -------------Standardization--------------
     public String getActionType() {
         return actionType;
     }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Point getPoint1() {
         return point1;
     }
-
-    public void setPoint1(Point point1) {
-        this.point1 = point1;
-    }
-
     public Point getPoint2() {
         return point2;
     }
-
-    public void setPoint2(Point point2) {
-        this.point2 = point2;
-    }
-
     public ArrayList<String> getShapeList() {
         return shapeList;
     }
-
-    public void setShapeList(ArrayList<String> shapeList) {
-        this.shapeList = shapeList;
-    }
-
     public Double getDistance1() {
         return distance1;
     }
-
-    public void setDistance1(Double distance1) {
-        this.distance1 = distance1;
-    }
-
     public Double getDistance2() {
         return distance2;
     }
-
-    public void setDistance2(Double distance2) {
-        this.distance2 = distance2;
-    }
-
 }

@@ -4,23 +4,21 @@ public class Square extends Graph{
     double width;
     double height;
 
-    public Square(Point p, double l) {
+    public Square(String name, Point p, double l) {
+        this.name = name;
         location = p;
         width = l;
         height = l;
 
-        xMin = location.x;
-        xMax = location.x + width;
-        yMin = location.y - height;
-        yMax = location.y;
+        xMin = (getLocation().x);
+        xMax = (getLocation().x + width);
+        yMin = (getLocation().y - height);
+        yMax = (getLocation().y);
     }
 
     @Override
     public boolean isIntersected(Rectangle that) {
-        return (this.xMin > that.xMax || that.xMin > this.xMax ||
-                this.yMin > that.yMax || that.yMin > this.yMax ||
-                (this.yMax < that.yMax &&  this.yMin > that.yMin && this.xMax < that.xMax && this.xMin > that.yMax)||
-                (that.yMax < this.yMax &&  that.yMin > this.yMin && that.xMax < this.xMax && that.xMin > this.yMax));
+        return that.isIntersected(this);
     }
 
     @Override
@@ -35,18 +33,16 @@ public class Square extends Graph{
 
     @Override
     public boolean isIntersected(Square that) {
-        return (this.xMin > that.xMax || that.xMin > this.xMax ||
-                this.yMin > that.yMax || that.yMin > this.yMax ||
-                (this.yMax < that.yMax &&  this.yMin > that.yMin && this.xMax < that.xMax && this.xMin > that.yMax)||
-                (that.yMax < this.yMax &&  that.yMin > this.yMin && that.xMax < this.xMax && that.xMin > this.yMax));
+        Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
+        return temp.isIntersected(this);
     }
 
     @Override
     public boolean isContained(Point p) {
-        return location.x - 0.05 < p.x &&
-                p.x < location.x + width + 0.05 &&
-                p.y < location.y + 0.05 &&
-                location.y - height - 0.05 < p.y;
+        return getLocation().x - 0.05 < p.x &&
+                p.x < getLocation().x + width + 0.05 &&
+                p.y < getLocation().y + 0.05 &&
+                getLocation().y - height - 0.05 < p.y;
     }
 
     @Override

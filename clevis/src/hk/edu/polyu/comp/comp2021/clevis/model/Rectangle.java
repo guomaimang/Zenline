@@ -4,50 +4,49 @@ public class Rectangle extends Graph {
     double width;
     double height;
 
-    public Rectangle(Point p, double w, double h) {
+    public Rectangle(String name, Point p, double w, double h) {
+        this.name  = name;
         location = p;
         width = w;
         height = h;
 
         xMin = location.x;
-        xMax = location.x + width;
-        yMin = location.y - height;
-        yMax = location.y;
+        xMax = (getLocation().x + width);
+        yMin = (getLocation().y - height);
+        yMax = (getLocation().y);
     }
     @Override
     public void listSelf(){}
 
-    @Override
+
     public boolean isIntersected(Rectangle that) {
-        return (this.xMin > that.xMax || that.xMin > this.xMax ||
-                this.yMin > that.yMax || that.yMin > this.yMax ||
-                (this.yMax < that.yMax &&  this.yMin > that.yMin && this.xMax < that.xMax && this.xMin > that.yMax)||
-                (that.yMax < this.yMax &&  that.yMin > this.yMin && that.xMax < this.xMax && that.xMin > this.yMax));
+        return (this.getxMin() > that.getxMax() || that.getxMin() > this.getxMax() ||
+                this.getyMin() > that.getyMax() || that.getyMin() > this.getyMax() ||
+                (this.getyMax() < that.getyMax() &&  this.getyMin() > that.getyMin() && this.getxMax() < that.getxMax() && this.getxMin() > that.getyMax())||
+                (that.getyMax() < this.getyMax() &&  that.getyMin() > this.getyMin() && that.getxMax() < this.getxMax() && that.getxMin() > this.getyMax()));
     }
 
-    @Override
+
     public boolean isIntersected(Circle that) {
         return false;
     }
 
-    @Override
+
     public boolean isIntersected(Line that) {
         return false;
     }
 
-    @Override
+
     public boolean isIntersected(Square that) {
-        return (this.xMin > that.xMax || that.xMin > this.xMax ||
-                this.yMin > that.yMax || that.yMin > this.yMax ||
-                (this.yMax < that.yMax &&  this.yMin > that.yMin && this.xMax < that.xMax && this.xMin > that.yMax)||
-                (that.yMax < this.yMax &&  that.yMin > this.yMin && that.xMax < this.xMax && that.xMin > this.yMax));
+        Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
+        return isIntersected(temp);
     }
 
     @Override
     public boolean isContained(Point p) {
-        return location.x - 0.05 < p.x &&
-                p.x < location.x + width + 0.05 &&
-                p.y < location.y + 0.05 &&
-                location.y - height - 0.05 < p.y;
+        return getLocation().x - 0.05 < p.x &&
+                p.x < getLocation().x + width + 0.05 &&
+                p.y < getLocation().y + 0.05 &&
+                getLocation().y - height - 0.05 < p.y;
     }
 }
