@@ -1,7 +1,6 @@
 package hk.edu.polyu.comp.comp2021.clevis;
 
 import hk.edu.polyu.comp.comp2021.clevis.model.*;
-
 import java.util.Scanner;
 
 public class Application {
@@ -12,16 +11,17 @@ public class Application {
     public static void main(String[] args){
         System.out.println("Welcome to use Clevis!");
         Scanner scanIn = new Scanner(System.in);
+        Shell shell = null;
         while (guard){
             try {
                 System.out.print("Please enter your command: ");
                 String inputString = scanIn.nextLine();
-                Shell shell = new Shell(inputString);
-                opc(shell);
+                shell = new Shell(inputString);
             }catch (Exception e){
                 System.out.println("Your command is not correct, please try again!");
+                shell = null;
             }
-
+                opc(shell);
         }
         scanIn.close();
     }
@@ -29,6 +29,7 @@ public class Application {
     // to-do block
     // RECTANGLE,LINE,CIRCLE,SQUARE,GROUP,UNGROUP,BOUNDINGBOX,DELETE,MOVE,PICK_AND_MOVE,INTERSECT,LIST,LISTALL,QUIT,REDO,UNDO
     public static void opc(Shell s){
+        if(s == null) return;
 
         switch (s.getActionType()) {
             case "rectangle": {
@@ -61,6 +62,7 @@ public class Application {
             }
             case "delete":{
                 Clevis.delete(s.getName());
+                System.out.println("Successful!");
                 break;
             }
             case "boundingbox":{
@@ -72,7 +74,7 @@ public class Application {
                 break;
             }
             case "pick-and-move":{
-                Clevis.pickAndMove(s.getName(), s.getPoint1());
+                Clevis.pickAndMove(s.getPoint1(),s.getDistance1(),s.getDistance2());
             }
             case "intersect":{
                 boolean isInc;
@@ -101,6 +103,9 @@ public class Application {
                 break;}
             case "listAll":{
                 Clevis.listAll();
+            }
+            case "NULL":{
+                break;
             }
             case "quit":{
                 guard = false;

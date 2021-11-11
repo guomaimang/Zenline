@@ -1,14 +1,13 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Shell {
     private final String actionType;
     private String name;
     private Point point1;
     private Point point2;
-    private ArrayList<String> shapeList;
+    private final ArrayList<String> shapeList;
     private Double distance1;
     private Double distance2;
 
@@ -23,8 +22,8 @@ public class Shell {
         shapeList = new ArrayList<>();
 
         // get keyword list
-        for (int i = 0; i < sSplit.length; i++) {
-            if (!sSplit[i].equals("")) keyword.add(sSplit[i]);
+        for (String value : sSplit) {
+            if (!value.equals("")) keyword.add(value);
         }
 
         // fill attribute
@@ -52,17 +51,17 @@ public class Shell {
                 name = cfName(keyword.get(1));
                 for (int i = 2; i < keyword.size(); i++) {
                     String k = safeName(keyword.get(i));
-                    // overlapping
-                    if (k.equals(name)){
-                        System.out.println("Collection can't contain itself!");
-                        throw new IllegalArgumentException();
-                    }
                     // doesn't exist
                     if (Clevis.findGraph(k) == null && Clevis.findShape(k) == null){
                         System.out.println("One shape doesn't exist!");
                         throw new  IllegalArgumentException();
                     }
-                    if(!shapeList.contains(k)) shapeList.add(k);
+                    // overlapping
+                    if (Clevis.findShapeInShape(k) || Clevis.findGraphInShape(k)){
+                        System.out.println("Overlapping!");
+                        throw new IllegalArgumentException();
+                    }
+                    shapeList.add(k);
                 }
                 break;
             case "ungroup": // same as below
@@ -131,10 +130,10 @@ public class Shell {
         if (name != null) System.out.println(name);
         if (point1 != null) System.out.println(point1.x + " " + point1.y);
         if (point2 != null) System.out.println(point2.x + " " + point2.y);
-        for (int i = 0; i < shapeList.size(); i++) {
-            System.out.print(shapeList.get(i) + " ");
+        for (String s : shapeList) {
+            System.out.print(s + " ");
         }
-        System.out.println("");
+        System.out.println();
         if (point1 != null) System.out.println(distance1);
         if (point1 != null) System.out.println(distance2);
     }
@@ -161,7 +160,7 @@ public class Shell {
     }
     // Name is not conflict with exist
     String cfName(String s){
-        if (Clevis.findShapeWithDel(s) == null && Clevis.findGraphWithDel(s) == null)
+        if (Clevis.findShape(s) == null && Clevis.findGraph(s) == null)
             return safeName(s);
         else {
             System.out.println("Name Conflict!");

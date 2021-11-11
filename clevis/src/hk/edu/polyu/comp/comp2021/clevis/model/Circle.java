@@ -5,6 +5,7 @@ public class Circle extends Graph{
 
     // @JiaoZhiyang, checked and modify by HanJiaming
     public Circle(String name, Point p,double r){
+        this.name = name;
         location = p;
         this.r = r;
         xMin = p.x - r;

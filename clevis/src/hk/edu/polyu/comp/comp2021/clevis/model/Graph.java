@@ -47,6 +47,9 @@ public abstract class Graph {
     public abstract boolean isIntersected(Circle that);
     public abstract boolean isIntersected(Rectangle that);
     public abstract boolean isIntersected(Square that);
+    public void boundingbox(){
+        System.out.println(xMin + " " + yMax + " " + (xMax-xMin) + " " +(yMax-yMin));
+    }
 
     // ---------standardization----------------------
     public String getName() {

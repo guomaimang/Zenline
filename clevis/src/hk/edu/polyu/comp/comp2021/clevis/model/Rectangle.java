@@ -18,7 +18,6 @@ public class Rectangle extends Graph {
     @Override
     public void listSelf(){}
 
-
     public boolean isIntersected(Rectangle that) {
         return (this.getxMin() > that.getxMax() || that.getxMin() > this.getxMax() ||
                 this.getyMin() > that.getyMax() || that.getyMin() > this.getyMax() ||
@@ -26,16 +25,13 @@ public class Rectangle extends Graph {
                 (that.getyMax() < this.getyMax() &&  that.getyMin() > this.getyMin() && that.getxMax() < this.getxMax() && that.getxMin() > this.getyMax()));
     }
 
-
     public boolean isIntersected(Circle that) {
         return false;
     }
 
-
     public boolean isIntersected(Line that) {
         return false;
     }
-
 
     public boolean isIntersected(Square that) {
         Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
