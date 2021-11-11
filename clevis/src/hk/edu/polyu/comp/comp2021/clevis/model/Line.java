@@ -12,15 +12,8 @@ public class Line extends Graph{
     @Override
     //判断一个图形是否包含一个点
     public boolean isContained(Point p) {
-        //判断一条线是否包含一个点
-        double k = (location.y - location2.y) / (location.x - location2.x);
-        double b = location.y - k * location.x;
-        //y = kx + b
-        if (Math.abs(p.x * k + b - p.y)  < pi) {
-            return p.x >= Math.min(location.x, location2.x) && p.x <= Math.max(location.x, location2.x);
-        }
-        //否则点不在线上
-        return false;
+        Circle c = new Circle(p, 0.05);
+        return c.isIntersected(this);
     }
 
     @Override
@@ -53,31 +46,49 @@ public class Line extends Graph{
 
     @Override
     public boolean isIntersected(Circle that) {
-        Point c = that.location, L1 = location, L2 = location2;
+        Point O = that.location;
+        Point p1 = location, p2 = location2;
         double r = that.r;
-        double t1 = dist(c, L1) - r, t2 = dist(c, L2) - r;
-        Point t = c;
-        if(t1 < pi || t2 < pi) return t1 > -pi || t2 > -pi;
-        t = new Point(L1.y - L2.y, L2.x - L1.x);
-//        t.x += L1.y - L2.y;
-//        t.y += L2.x - L1.x;
-        return mul(L1, c, t) * mul(L2, c, t) < pi && p_to_line(c, L1, L2) - r < pi;
+        double a, b, c, dist1, dist2, angle1, angle2; // ax + by + c = 0;
+        if (p1.x == p2.x) {
+            a = 1; b = 0;c = -p1.x;//特殊情况判断，分母不能为零
+        }
+        else if (p1.y == p2.y) {
+            a = 0;b = 1; c = -p1.y;//特殊情况判断，分母不能为零
+        }
+        else {
+            a = p1.y - p2.y;
+            b = p2.x - p1.x;
+            c = p1.x * p2.y - p1.y * p2.x;
+        }
+        dist1 = a * O.x + b * O.y + c;
+        dist1 *= dist1;
+        dist2 = (a * a + b * b) * r * r;
+        if (dist1 > dist2) return false;//点到直线距离大于半径r
+        angle1 = (O.x - p1.x) * (p2.x - p1.x) + (O.y - p1.y) * (p2.y - p1.y);
+        angle2 = (O.x - p2.x) * (p1.x - p2.x) + (O.y - p2.y) * (p1.y - p2.y);
+        if (angle1 > 0 && angle2 > 0) return true;//余弦都为正，则是锐角
+        return false;
     }
 
     @Override
     public boolean isIntersected(Line that) {
+//        Point a = location, b = location2, c = that.location, d = that.location2;
+//        if(!(Math.min(a.x,b.x)<=Math.max(c.x,d.x)
+//                &&Math.min(c.y,d.y)<=Math.max(a.y,b.y)
+//                &&Math.min(c.x,d.x)<=Math.max(a.x,b.x)
+//                &&Math.min(a.y,b.y)<=Math.max(c.y,d.y)))
+//            return false;
+//        double u,v,w,z;
+//        u=(c.x-a.x)*(b.y-a.y)-(b.x-a.x)*(c.y-a.y);
+//        v=(d.x-a.x)*(b.y-a.y)-(b.x-a.x)*(d.y-a.y);
+//        w=(a.x-c.x)*(d.y-c.y)-(d.x-c.x)*(a.y-c.y);
+//        z=(b.x-c.x)*(d.y-c.y)-(d.x-c.x)*(b.y-c.y);
+//        return (u*v<=pi&&w*z<=pi);
         Point a = location, b = location2, c = that.location, d = that.location2;
-        if(!(Math.min(a.x,b.x)<=Math.max(c.x,d.x)
-                &&Math.min(c.y,d.y)<=Math.max(a.y,b.y)
-                &&Math.min(c.x,d.x)<=Math.max(a.x,b.x)
-                &&Math.min(a.y,b.y)<=Math.max(c.y,d.y)))
-            return false;
-        double u,v,w,z;
-        u=(c.x-a.x)*(b.y-a.y)-(b.x-a.x)*(c.y-a.y);
-        v=(d.x-a.x)*(b.y-a.y)-(b.x-a.x)*(d.y-a.y);
-        w=(a.x-c.x)*(d.y-c.y)-(d.x-c.x)*(a.y-c.y);
-        z=(b.x-c.x)*(d.y-c.y)-(d.x-c.x)*(b.y-c.y);
-        return (u*v<=pi&&w*z<=pi);
+        if(on_seg(c, d, a) || on_seg(c, d, b) || on_seg(a, b, c) || on_seg(a, b, d))
+            return true;
+        return sig(cross(b, c, a)* cross(b, d, a)) < 0 && sig(cross(d, a, c)*cross(d, b, c)) < 0;
     }
 
     @Override
@@ -88,14 +99,21 @@ public class Line extends Graph{
         return isIntersected(new Line(a, b)) || isIntersected(new Line(a, c)) ||
                 isIntersected(new Line(b, d)) || isIntersected(new Line(c, d));
     }
-    double mul(Point p1, Point p2, Point p0){
-        return (p1.x-p0.x)*(p2.y-p0.y)-(p2.x-p0.x)*(p1.y-p0.y);
-    }
-    double dist(Point p1, Point p2){
-        return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
-    }
-    double p_to_line(Point p, Point L1, Point L2){
-        return Math.abs(mul(p, L1, L2)) / dist(L1, L2);
-    }
 
+    double mul(Point a, Point b) {
+        return a.x * b.x + a.y * b.y;
+    }
+    double cha_mul(Point a, Point b) {
+        return a.x * b.x + a.y * b.y;
+    }
+    Point sub(Point a, Point b) {
+        return new Point(a.x - b.x, a.y - b.y);
+    }
+    static int sig(double x) {
+        int i = (x > 0.05 ? 1 : 0) - (x < -0.05 ? 1:0);
+        return i;
+    }
+    double cross(Point a, Point b, Point c) { return cha_mul(this.sub(a, c) , this.sub(b, c));}
+    double dot(Point a, Point b, Point c)  { return mul(this.sub(a, c) , this.sub(b, c)); }
+    boolean on_seg(Point a, Point b, Point c) { return sig(cross(a, b, c)) == 0 && sig(dot(a, b, c)) <= 0; }//判断是否在点上
 }
