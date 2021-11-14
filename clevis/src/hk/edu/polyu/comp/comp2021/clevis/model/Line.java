@@ -16,8 +16,12 @@ public class Line extends Graph{
     }
 
     @Override
-    public void listSelf() {
-        System.out.printf("Line: Point1(%f, %f), Point2(%f, %f)", location.x, location.y, location2.x, location2.y);
+    public String listSelf(int indentation) {
+        String outcome = new String("");
+        for (int i = 0; i < indentation; i++) {
+            outcome = outcome + "   ";
+        }
+        return outcome+("Line" + " Name: " + name + " Point1: x= " + location.x +" y= " + location.y + " Point2: x= " + location2.x + " y= " + location2.y);
     }
 
     @Override

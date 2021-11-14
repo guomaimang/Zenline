@@ -67,18 +67,22 @@ public class Shape {
         }
     }
 
-    public void listSelf() {
-        // First, Print self
-        System.out.println("Shapes:");
-        for (Shape shape : shapes) {
-                System.out.println(shape.getName() + " ");
+    public void listSelf(int indentation){
+        String prestr = new String("");
+        for (int i = 0; i < indentation; i++) {
+            prestr = prestr + "   ";
         }
-
-        System.out.println("Graphs:");
+        System.out.println(prestr + "Group Name: " + name);
+        // Print Graph
+        System.out.println(prestr + prestr + "Graphs:");
         for (Graph graph : graphs) {
-            System.out.println(graph.getName() + " ");
+            System.out.println(graph.listSelf(indentation+2));
         }
-
+        // Print Shape
+        System.out.println(prestr + prestr + "Shapes:");
+        for (Shape shape : shapes) {
+            shape.listSelf(indentation+2);
+        }
     }
     public void ungroup(){
         shapes.clear();

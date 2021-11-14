@@ -31,8 +31,12 @@ public class Circle extends Graph{
 
     @Override
     // @HanJiaming
-    public void listSelf() {
-        System.out.println("R: "+r+" Round Point: "+ "x= " + location.x + " y=" + location.y);
+    public String listSelf(int indentation) {
+        String outcome = new String("");
+        for (int i = 0; i < indentation; i++) {
+            outcome = outcome + "   ";
+        }
+        return outcome + ("Circle"+ " Name: " + name +" R: "+ r +" Round Point: " + "x= " + location.x + " y= " + location.y);
     }
 
     @Override

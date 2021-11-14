@@ -23,7 +23,7 @@ public abstract class Graph {
     protected abstract void update();
 
     public abstract boolean isContained(Point p);
-    public abstract void listSelf();
+    public abstract String listSelf(int indentation);
 
     public boolean isIntersected(Graph that){
         // force convert to child

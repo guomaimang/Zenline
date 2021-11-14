@@ -1,5 +1,7 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
+import javax.lang.model.element.Name;
+
 public class Square extends Graph{
     final double width;
     final double height;
@@ -49,8 +51,12 @@ public class Square extends Graph{
     }
 
     @Override
-    public void listSelf() {
-        System.out.println("Point(Left-Top): x= " +  location.x + " y= " + location.y);
-        System.out.println("Width= " + width);
+    public String listSelf(int indentation) {
+        String outcome = new String("");
+        for (int i = 0; i < indentation; i++) {
+            outcome = outcome + "   ";
+        }
+        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  location.x + " y= " + location.y + " Width= " + width);
+
     }
 }

@@ -17,9 +17,12 @@ public class Rectangle extends Graph {
         update();
     }
     @Override
-    public void listSelf(){
-        System.out.println("Point(Left-Top): x= " +  location.x + " y= " + location.y);
-        System.out.println("Width= " + width + " Height= "+ height);
+    public String listSelf(int indentation) {
+        String outcome = new String("");
+        for (int i = 0; i < indentation; i++) {
+            outcome = outcome + "   ";
+        }
+        return outcome + ("Rectangle:" +" Name: " + name + " Point(Left-Top): x= " +  location.x + " y= " + location.y + " Width= " + width + " Height= "+ height);
     }
 
     @Override

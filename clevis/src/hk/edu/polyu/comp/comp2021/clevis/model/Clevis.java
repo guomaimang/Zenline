@@ -41,13 +41,16 @@ public class Clevis {
                 return;
             }
         }
+
         for (Shape shape : shapes) {
             if (shape.getName().equals(name)) {
                 shape.deleteSelf();
                 shapes.remove(shape);
                 for (Shape s : shapes) {
-                    if (s.contain(shape)) s.delete(shape);
-                    return;
+                    if (s.contain(shape)) {
+                        s.delete(shape);
+                        return;
+                    }
                 }
                 return;
             }
@@ -58,23 +61,25 @@ public class Clevis {
     public static void list(String shapeName){
         for (Graph graph : graphs) {
             if (graph.getName().equals(shapeName)) {
-                graph.listSelf();
+                System.out.println(graph.listSelf(0));
                 return;
             }
         }
         for (Shape shape : shapes) {
             if (shape.getName().equals(shapeName)) {
-                shape.listSelf();
+                shape.listSelf(0);
                 return;
             }
         }
     }
     public static void listAll() {
+        System.out.println("Graphs in Clevis:");
         for (Graph graph : graphs) {
-            graph.listSelf();
+            System.out.println(graph.listSelf(1));
         }
         for (Shape shape : shapes) {
-            shape.listSelf();
+            System.out.println("Shapes in Clevis:");
+            shape.listSelf(1);
         }
     }
     public static void boundingbox(String n){
