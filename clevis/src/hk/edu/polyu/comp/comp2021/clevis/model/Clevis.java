@@ -46,7 +46,7 @@ public class Clevis {
                 shape.deleteSelf();
                 shapes.remove(shape);
                 for (Shape s : shapes) {
-                    if (s.contain(s)) s.delete(s);
+                    if (s.contain(s)) s.delete(shape);
                     return;
                 }
                 return;
