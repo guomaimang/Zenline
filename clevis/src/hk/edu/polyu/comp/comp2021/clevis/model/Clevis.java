@@ -46,7 +46,7 @@ public class Clevis {
                 shape.deleteSelf();
                 shapes.remove(shape);
                 for (Shape s : shapes) {
-                    if (s.contain(s)) s.delete(shape);
+                    if (s.contain(shape)) s.delete(shape);
                     return;
                 }
                 return;
@@ -69,7 +69,13 @@ public class Clevis {
             }
         }
     }
-    public static void listAll(){
+    public static void listAll() {
+        for (Graph graph : graphs) {
+            graph.listSelf();
+        }
+        for (Shape shape : shapes) {
+            shape.listSelf();
+        }
     }
     public static void boundingbox(String n){
         if (findShape(n)!= null) findShape(n).boundingbox();
