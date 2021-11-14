@@ -3,8 +3,6 @@ import java.util.ArrayList;
 
 public class Clevis {
 
-    public Clevis(){}
-
     private static final ArrayList<Graph> graphs = new ArrayList<>();
     private static final ArrayList<Shape> shapes = new ArrayList<>();
     public static void addGraph(Graph g){

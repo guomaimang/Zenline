@@ -1,7 +1,7 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
 public class Circle extends Graph{
-    double r;
+    final double r;
 
     // @JiaoZhiyang, checked and modify by HanJiaming
     public Circle(String name, Point p,double r){
@@ -25,9 +25,9 @@ public class Circle extends Graph{
     }
 
     @Override
-    // @JiaoZhiyang
+    // @HanJiaming
     public void listSelf() {
-
+        System.out.println("半径: "+r+" 圆心: "+ "x= " + location.x + " y=" + location.y);
     }
 
     @Override
@@ -52,13 +52,14 @@ public class Circle extends Graph{
     }
 
     @Override
+    // @JiaoZhiyang ,checked and modify by HanJiaming
     public boolean isIntersected(Line that) {
-        return false;
+        return that.isIntersected(this);
     }
 
     @Override
+    // @HanJiaming
     public boolean isIntersected(Square that) {
-        Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
-        return isIntersected(temp);
+        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
     }
 }

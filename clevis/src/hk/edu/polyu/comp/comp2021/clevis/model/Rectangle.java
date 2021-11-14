@@ -1,8 +1,13 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
+/**
+ * Frame By @HanJiaming
+ * For COMP2021 Project Only
+ */
+
 public class Rectangle extends Graph {
-    double width;
-    double height;
+    final double width;
+    final double height;
 
     public Rectangle(String name, Point p, double w, double h) {
         this.name  = name;
@@ -16,8 +21,12 @@ public class Rectangle extends Graph {
         yMax = (getLocation().y);
     }
     @Override
-    public void listSelf(){}
+    public void listSelf(){
+        System.out.println("Point(Left-Top): x= " +  location.x + " y= " + location.y);
+        System.out.println("Width= " + width + " Height= "+ height);
+    }
 
+    @Override
     public boolean isIntersected(Rectangle that) {
         return (this.getxMin() > that.getxMax() || that.getxMin() > this.getxMax() ||
                 this.getyMin() > that.getyMax() || that.getyMin() > this.getyMax() ||
@@ -25,17 +34,19 @@ public class Rectangle extends Graph {
                 (that.getyMax() < this.getyMax() &&  that.getyMin() > this.getyMin() && that.getxMax() < this.getxMax() && that.getxMin() > this.getyMax()));
     }
 
+    @Override
     public boolean isIntersected(Circle that) {
-        return false;
+        return that.isIntersected(this);
     }
 
+    @Override
     public boolean isIntersected(Line that) {
-        return false;
+        return that.isIntersected(this);
     }
 
+    @Override
     public boolean isIntersected(Square that) {
-        Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
-        return isIntersected(temp);
+        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
     }
 
     @Override

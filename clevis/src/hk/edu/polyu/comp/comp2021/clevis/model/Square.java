@@ -1,8 +1,8 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
 public class Square extends Graph{
-    double width;
-    double height;
+    final double width;
+    final double height;
 
     public Square(String name, Point p, double l) {
         this.name = name;
@@ -23,18 +23,17 @@ public class Square extends Graph{
 
     @Override
     public boolean isIntersected(Circle that) {
-        return false;
+        return that.isIntersected(this);
     }
 
     @Override
     public boolean isIntersected(Line that) {
-        return false;
+        return that.isIntersected(this);
     }
 
     @Override
     public boolean isIntersected(Square that) {
-        Rectangle temp = new Rectangle("",that.getLocation(),that.width,that.height);
-        return temp.isIntersected(this);
+        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
     }
 
     @Override
@@ -47,6 +46,7 @@ public class Square extends Graph{
 
     @Override
     public void listSelf() {
-
+        System.out.println("Point(Left-Top): x= " +  location.x + " y= " + location.y);
+        System.out.println("Width= " + width);
     }
 }
