@@ -21,9 +21,9 @@ public class Shape {
                 shapes.add(Clevis.findShape(s));
             }
         }
-        updateSelf();
+        update();
     }
-    private void updateSelf(){
+    private void update(){
         // check if empty
         if(shapes.size()+ graphs.size() == 0){
             deleteSelf();
@@ -68,15 +68,15 @@ public class Shape {
     }
 
     public void listSelf() {
+        // First, Print self
         System.out.println("Shapes:");
         for (Shape shape : shapes) {
-                System.out.println("Name: " + shape.getName());
-                shape.listSelf();
+                System.out.println(shape.getName() + " ");
         }
 
         System.out.println("Graphs:");
         for (Graph graph : graphs) {
-            graph.listSelf();
+            System.out.println(graph.getName() + " ");
         }
 
     }
@@ -93,9 +93,6 @@ public class Shape {
     public void boundingbox(){
         System.out.println(xMin + " " + yMax + " " + (xMax-xMin) + " " +(yMax-yMin));
     }
-    public boolean intersect(Shape s){return false;}
-    public boolean intersect(Graph g){return false;}
-
     public String getName() {
         return name;
     }
@@ -137,11 +134,11 @@ public class Shape {
     }
     public void delete(Graph g){
         graphs.remove(g);
-        updateSelf();
+        update();
     }
     public void delete(Shape s){
         shapes.remove(s);
-        updateSelf();
+        update();
     }
     public void remove(Shape s){
         shapes.remove(s);
