@@ -7,7 +7,7 @@ public class Shell {
     private String name;
     private Point point1;
     private Point point2;
-    private final ArrayList<String> shapeList;
+    private final ArrayList<String> shapeList =  new ArrayList<>();
     private Double distance1;
     private Double distance2;
 
@@ -19,7 +19,6 @@ public class Shell {
 
         String[] sSplit = s.split(" ");
         ArrayList<String> keyword = new ArrayList<>();
-        shapeList = new ArrayList<>();
 
         // get keyword list
         for (String value : sSplit) {
@@ -49,6 +48,8 @@ public class Shell {
                 break;
             case "group":
                 name = cfName(keyword.get(1));
+                // no arg
+                if (keyword.size() < 3) throw new IllegalArgumentException();
                 for (int i = 2; i < keyword.size(); i++) {
                     String k = safeName(keyword.get(i));
                     // doesn't exist
@@ -57,7 +58,7 @@ public class Shell {
                         throw new  IllegalArgumentException();
                     }
                     // overlapping
-                    if (Clevis.findShapeInShape(k) || Clevis.findGraphInShape(k)){
+                    if (Clevis.isShapeInShape(k) || Clevis.isGraphInShape(k)){
                         System.out.println("Overlapping!");
                         throw new IllegalArgumentException();
                     }
@@ -122,6 +123,7 @@ public class Shell {
                 throw new IllegalArgumentException();
         }
         watcher();
+        System.out.println(keyword.size());
     }
 
     // a tool to see attribute

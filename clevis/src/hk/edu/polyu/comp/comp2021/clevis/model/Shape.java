@@ -26,7 +26,7 @@ public class Shape {
     private void updateSelf(){
         // check if empty
         if(shapes.size()+ graphs.size() == 0){
-            removeSelf();
+            deleteSelf();
             System.out.println(this.name +" has been empty,it will be deleted!");
             return;
         }
@@ -83,6 +83,11 @@ public class Shape {
     public void ungroup(){
         shapes.clear();
         graphs.clear();
+        if (Clevis.isShapeInShape(this.getName())){
+            Shape s = Clevis.findShapeInShape(this.getName());
+            s.remove(this);
+        }
+
     }
 
     public void boundingbox(){
@@ -121,21 +126,25 @@ public class Shape {
         return graphs.contains(g);
     }
 
-    public void removeSelf() {
+    public void deleteSelf() {
         for (Graph graph:graphs)
             Clevis.innerDelete(graph);
         graphs.clear();
         for (Shape shape:shapes)
             Clevis.innerDelete(shape);
         shapes.clear();
+        Clevis.innerDelete(this);
     }
-    public void remove(Graph g){
+    public void delete(Graph g){
         graphs.remove(g);
+        updateSelf();
+    }
+    public void delete(Shape s){
+        shapes.remove(s);
         updateSelf();
     }
     public void remove(Shape s){
         shapes.remove(s);
-        updateSelf();
     }
 
     public boolean isContained(Point p) {

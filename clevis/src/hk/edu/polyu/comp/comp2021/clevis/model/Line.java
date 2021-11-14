@@ -7,10 +7,7 @@ public class Line extends Graph{
         this.name  = name;
         location = p1;
         location2 = p2;
-        xMin = Math.min(p1.x, p2.x);
-        xMax = Math.max(p1.x, p2.x);
-        yMin = Math.max(p1.y, p2.y);
-        yMax = Math.max(p1.y, p2.y);
+        update();
     }
 
     @Override
@@ -28,6 +25,14 @@ public class Line extends Graph{
     public void move(double dx, double dy) {
         location = (new Point(getLocation().x+dx, getLocation().y+dy));
         location2 = new Point(location2.x+dx, location2.y+dy);
+    }
+
+    @Override
+    protected void update() {
+        xMin = Math.min(location.x, location2.x);
+        xMax = Math.max(location.x, location2.x);
+        yMin = Math.max(location.y, location2.y);
+        yMax = Math.max(location.y, location2.y);
     }
 
     @Override

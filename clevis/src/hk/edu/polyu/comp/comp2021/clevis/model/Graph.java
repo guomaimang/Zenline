@@ -18,7 +18,10 @@ public abstract class Graph {
 
     public void move(double dx,double dy){
         location = (new Point(dx+ getLocation().x,dy+ getLocation().y));
+        this.update();
     }
+    protected abstract void update();
+
     public abstract boolean isContained(Point p);
     public abstract void listSelf();
 

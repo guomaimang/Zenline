@@ -14,11 +14,7 @@ public class Rectangle extends Graph {
         location = p;
         width = w;
         height = h;
-
-        xMin = location.x;
-        xMax = (getLocation().x + width);
-        yMin = (getLocation().y - height);
-        yMax = (getLocation().y);
+        update();
     }
     @Override
     public void listSelf(){
@@ -47,6 +43,14 @@ public class Rectangle extends Graph {
     @Override
     public boolean isIntersected(Square that) {
         return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+    }
+
+    @Override
+    protected void update() {
+        xMin = location.x;
+        xMax = (location.x + width);
+        yMin = (location.y - height);
+        yMax = (location.y);
     }
 
     @Override

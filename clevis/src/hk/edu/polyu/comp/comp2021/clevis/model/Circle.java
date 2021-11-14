@@ -8,10 +8,15 @@ public class Circle extends Graph{
         this.name = name;
         location = p;
         this.r = r;
-        xMin = p.x - r;
-        xMax = p.x + r;
-        yMin = p.y - r;
-        yMax = p.y + r;
+        update();
+    }
+
+    @Override
+    protected void update() {
+        xMin = location.x - r;
+        xMax = location.x + r;
+        yMin = location.y - r;
+        yMax = location.y + r;
     }
 
     @Override

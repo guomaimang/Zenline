@@ -9,11 +9,7 @@ public class Square extends Graph{
         location = p;
         width = l;
         height = l;
-
-        xMin = (getLocation().x);
-        xMax = (getLocation().x + width);
-        yMin = (getLocation().y - height);
-        yMax = (getLocation().y);
+        update();
     }
 
     @Override
@@ -34,6 +30,14 @@ public class Square extends Graph{
     @Override
     public boolean isIntersected(Square that) {
         return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+    }
+
+    @Override
+    protected void update() {
+        xMin = (getLocation().x);
+        xMax = (getLocation().x + width);
+        yMin = (getLocation().y - height);
+        yMax = (getLocation().y);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Clevis {
                 graphs.remove(graph);
                 for (Shape shape : shapes) {
                     if (shape.contain(graph)) {
-                        shape.remove(graph);
+                        shape.delete(graph);
                         return;
                     }
                 }
@@ -43,10 +43,10 @@ public class Clevis {
         }
         for (Shape shape : shapes) {
             if (shape.getName().equals(name)) {
-                shape.removeSelf();
+                shape.deleteSelf();
                 shapes.remove(shape);
                 for (Shape s : shapes) {
-                    if (s.contain(s)) s.remove(s);
+                    if (s.contain(s)) s.delete(s);
                     return;
                 }
                 return;
@@ -138,7 +138,7 @@ public class Clevis {
         }
         return null;
     }
-    public static boolean findGraphInShape(String name){
+    public static boolean isGraphInShape(String name){
         Graph g = findGraph(name);
         for (Shape shape : shapes) {
             if (shape.contain(g)) return true;
@@ -146,12 +146,20 @@ public class Clevis {
         return false;
 
     }
-    public static boolean findShapeInShape(String name){
+    public static boolean isShapeInShape(String name){
         Shape s = findShape(name);
         for (Shape shape : shapes) {
             if (shape.contain(s)) return true;
         }
         return false;
+
+    }
+    public static Shape findShapeInShape(String name){
+        Shape s = findShape(name);
+        for (Shape shape : shapes) {
+            if (shape.contain(s)) return shape;
+        }
+        return null;
 
     }
 
