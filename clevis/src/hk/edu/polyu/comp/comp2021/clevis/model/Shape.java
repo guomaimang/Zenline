@@ -144,6 +144,7 @@ public class Shape {
     }
     public void delete(Shape s){
         shapes.remove(s);
+        s.deleteSelf();
         update();
     }
     public void remove(Shape s){
