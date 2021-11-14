@@ -56,7 +56,7 @@ public class Square extends Graph{
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  location.x + " y= " + location.y + " Width= " + width);
+        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f",location.x) + " y= " + String.format("%.2f",location.y) + " Width= " + String.format("%.2f",width));
 
     }
 }

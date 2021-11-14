@@ -74,12 +74,12 @@ public class Shape {
         }
         System.out.println(prestr + "Group Name: " + name);
         // Print Graph
-        System.out.println(prestr + prestr + "Graphs:");
+        System.out.println(prestr + "   " + "Graphs:");
         for (Graph graph : graphs) {
             System.out.println(graph.listSelf(indentation+2));
         }
         // Print Shape
-        System.out.println(prestr + prestr + "Shapes:");
+        System.out.println(prestr + "   " + "Shapes:");
         for (Shape shape : shapes) {
             shape.listSelf(indentation+2);
         }
@@ -135,6 +135,8 @@ public class Shape {
             Clevis.innerDelete(shape);
         shapes.clear();
         Clevis.innerDelete(this);
+        if (Clevis.isShapeInShape(name))
+            Clevis.findShapeInShape(this.getName()).update();
     }
     public void delete(Graph g){
         graphs.remove(g);
@@ -146,6 +148,7 @@ public class Shape {
     }
     public void remove(Shape s){
         shapes.remove(s);
+        update();
     }
 
     public boolean isContained(Point p) {
