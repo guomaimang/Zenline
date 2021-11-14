@@ -81,7 +81,7 @@ public class Shell {
             case "delete":  // same as below
             case "list":    // same as below
             case "boundingbox":
-                if (size != 6) throw new IllegalArgumentException();
+                if (size != 2) throw new IllegalArgumentException();
                 name = safeName(keyword.get(1));
                 if (Clevis.findGraph(name) == null && Clevis.findShape(name) == null){
                     System.out.println("One shape doesn't exist!");
