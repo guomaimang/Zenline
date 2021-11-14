@@ -36,7 +36,7 @@ public class Circle extends Graph{
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome + ("Circle"+ " Name: " + name +" R: "+ r +" Round Point: " + "x= " + String.format("%.2f",location.x)  + " y= " + String.format("%.2f",location.y));
+        return outcome + ("Circle"+ " Name: " + name +" R: "+ String.format("%.2f",r) +" Round Point: " + "x= " + String.format("%.2f",location.x)  + " y= " + String.format("%.2f",location.y));
     }
 
     @Override

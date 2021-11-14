@@ -136,7 +136,7 @@ public class Shape {
         shapes.clear();
         Clevis.innerDelete(this);
         if (Clevis.isShapeInShape(name))
-            Clevis.findShapeInShape(this.getName()).update();
+            Clevis.findShapeInShape(name).delete(this);
     }
     public void delete(Graph g){
         graphs.remove(g);
