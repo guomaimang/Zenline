@@ -27,7 +27,7 @@ public class Circle extends Graph{
     @Override
     // @HanJiaming
     public void listSelf() {
-        System.out.println("半径: "+r+" 圆心: "+ "x= " + location.x + " y=" + location.y);
+        System.out.println("R: "+r+" Round Point: "+ "x= " + location.x + " y=" + location.y);
     }
 
     @Override

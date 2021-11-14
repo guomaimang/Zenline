@@ -11,7 +11,7 @@ public class Application {
     public static void main(String[] args){
         System.out.println("Welcome to use Clevis!");
         Scanner scanIn = new Scanner(System.in);
-        Shell shell = null;
+        Shell shell;
         while (guard){
             try {
                 System.out.print("Please enter your command: ");
@@ -117,7 +117,6 @@ public class Application {
 
 
         }
-
 
 }
 

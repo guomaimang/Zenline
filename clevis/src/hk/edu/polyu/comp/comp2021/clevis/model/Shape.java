@@ -110,7 +110,7 @@ public class Shape {
         for (Graph graph : graphs) {
             graph.move(dx, dy);
         }
-        for (Graph shape : graphs) {
+        for (Shape shape : shapes) {
             shape.move(dx, dy);
         }
     }
@@ -122,13 +122,19 @@ public class Shape {
     }
 
     public void removeSelf() {
-            graphs.clear();
-        for (Shape shape : shapes) {
-            shape.removeSelf();
-        }
+        for (Graph graph:graphs)
+            Clevis.innerDelete(graph);
+        graphs.clear();
+        for (Shape shape:shapes)
+            Clevis.innerDelete(shape);
+        shapes.clear();
     }
     public void remove(Graph g){
-        if (contain(g)) remove(g);
+        graphs.remove(g);
+        updateSelf();
+    }
+    public void remove(Shape s){
+        shapes.remove(s);
         updateSelf();
     }
 

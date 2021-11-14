@@ -33,17 +33,22 @@ public class Clevis {
             if (graph.getName().equals(name)) {
                 graphs.remove(graph);
                 for (Shape shape : shapes) {
-                    if (shape.contain(graph)) shape.remove(graph);
-                    return;
+                    if (shape.contain(graph)) {
+                        shape.remove(graph);
+                        return;
+                    }
                 }
                 return;
             }
-
         }
         for (Shape shape : shapes) {
             if (shape.getName().equals(name)) {
                 shape.removeSelf();
                 shapes.remove(shape);
+                for (Shape s : shapes) {
+                    if (s.contain(s)) s.remove(s);
+                    return;
+                }
                 return;
             }
         }
@@ -148,6 +153,13 @@ public class Clevis {
         }
         return false;
 
+    }
+
+    public static void innerDelete(Graph graph) {
+        graphs.remove(graph);
+    }
+    public static void innerDelete(Shape shape){
+        shapes.remove(shape);
     }
 
     public void printClevis(){}
