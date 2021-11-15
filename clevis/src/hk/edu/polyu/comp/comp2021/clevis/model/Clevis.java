@@ -27,36 +27,6 @@ public class Clevis {
         System.out.println();
     }
 
-    // this method will return ture if excess successful
-    public static void delete(String name) {
-        for (Graph graph : graphs) {
-            if (graph.getName().equals(name)) {
-                graphs.remove(graph);
-                for (Shape shape : shapes) {
-                    if (shape.contain(graph)) {
-                        shape.innerRemove(graph);
-                    }
-                }
-                update();
-                return;
-            }
-        }
-        for (Shape shape : shapes) {
-            if (shape.getName().equals(name)) {
-                shapes.remove(shape);
-                shape.deleteSelf();
-                for (Shape s : shapes) {
-                    if (s.contain(shape)) {
-                        s.innerRemove(shape);
-                    }
-                }
-                update();
-                return;
-            }
-        }
-
-    }
-
     public static void list(String shapeName){
         for (Graph graph : graphs) {
             if (graph.getName().equals(shapeName)) {
@@ -173,15 +143,51 @@ public class Clevis {
 
     }
 
-    public static void innerDelete(Graph graph) {
-        graphs.remove(graph);
-    }
-    public static void innerDelete(Shape shape){
-        shapes.remove(shape);
+    public static void delete(String name) {
+        for (Graph graph : graphs) {
+            if (graph.getName().equals(name)) {
+                // remove self in clevis
+                graphs.remove(graph);
+                // remove self in shapes
+                for (Shape shape : shapes) {
+                    if (shape.contain(graph)) {
+                        shape.innerRemove(graph);
+                    }
+                }
+                // remove empty
+                update();
+                return;
+            }
+        }
+        for (Shape shape : shapes) {
+            if (shape.getName().equals(name)) {
+                // remove self in clevis
+                shapes.remove(shape);
+                // remove sub graph in clevis
+                for (Graph g: shape.getGraphs()){
+                    graphs.remove(g);
+                }
+                // remove sub shape in clevis
+                for (Shape s : shape.getShapes()) {
+                    Clevis.delete(s.getName());
+                }
+                // remove self in shapes
+                for (Shape s : shapes) {
+                    if (s.contain(shape)) {
+                        s.innerRemove(shape);
+                    }
+                }
+                // remove empty
+                update();
+                return;
+            }
+        }
+
     }
     public static void update(){
         for (Shape shape:shapes){
             shape.update();
+            if (shape.getSize() == 0) delete(shape.getName());
         }
     }
 

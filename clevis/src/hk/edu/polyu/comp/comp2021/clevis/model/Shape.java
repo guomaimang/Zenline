@@ -7,6 +7,13 @@ public class Shape {
     private final String name;
     private final ArrayList<Shape> shapes = new ArrayList<>();
     private final ArrayList<Graph> graphs = new ArrayList<>();
+    public ArrayList<Shape> getShapes(){
+        return shapes;
+    }
+    public ArrayList<Graph> getGraphs(){
+        return graphs;
+    }
+    public int getSize(){return shapes.size()+graphs.size();}
     private int zcode = 0;
     private double xMin,xMax,yMin,yMax;
 
@@ -26,7 +33,6 @@ public class Shape {
     public void update(){
         // check if empty
         if(shapes.size()+ graphs.size() == 0){
-            Clevis.delete(this.name);
             System.out.println(this.name +" will be deleted!");
             return;
         }
@@ -87,11 +93,6 @@ public class Shape {
     public void ungroup(){
         shapes.clear();
         graphs.clear();
-        if (Clevis.isShapeInShape(this.getName())){
-            Shape s = Clevis.findShapeInShape(this.getName());
-            s.ungroup(this);
-        }
-
     }
 
     public void boundingbox(){
@@ -127,25 +128,11 @@ public class Shape {
         return graphs.contains(g);
     }
 
-    public void deleteSelf() {
-        for (Graph graph:graphs)
-            Clevis.innerDelete(graph);
-        graphs.clear();
-        for (Shape shape:shapes){
-            Clevis.innerDelete(shape);
-            shape.deleteSelf();
-        }
-        shapes.clear();
-    }
     public void innerRemove(Graph g){
         graphs.remove(g);
         update();
     }
     public void innerRemove(Shape s){
-        shapes.remove(s);
-        update();
-    }
-    private void ungroup(Shape s){
         shapes.remove(s);
         update();
     }
