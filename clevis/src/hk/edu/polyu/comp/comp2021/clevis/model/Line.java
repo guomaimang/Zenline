@@ -12,7 +12,7 @@ public class Line extends Graph{
 
     @Override
     public boolean isContained(Point p) {
-        return false;
+        return new Circle("",p,error).isIntersected(this);
     }
 
     @Override

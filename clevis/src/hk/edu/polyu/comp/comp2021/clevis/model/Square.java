@@ -44,10 +44,7 @@ public class Square extends Graph{
 
     @Override
     public boolean isContained(Point p) {
-        return getLocation().x - 0.05 < p.x &&
-                p.x < getLocation().x + width + 0.05 &&
-                p.y < getLocation().y + 0.05 &&
-                getLocation().y - height - 0.05 < p.y;
+        return new Circle("",p,error).isIntersected(this);
     }
 
     @Override

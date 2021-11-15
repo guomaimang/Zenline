@@ -26,7 +26,7 @@ public class Shape {
             }
         }
         makeZcode();
-        System.out.println("The shapes zcode is" + zcode +".");
+        System.out.println("The shapes zcode is " + zcode +".");
     }
     private void makeZcode(){
         // initialization
@@ -103,9 +103,22 @@ public class Shape {
     }
 
     public boolean isIntersected(Shape shape) {
+        for (Graph g:graphs){
+            if (shape.isIntersected(g)) return true;
+        }
+        for (Shape s:shapes) {
+            if (shape.isIntersected(s)) return true;
+        }
         return false;
     }
+
     public boolean isIntersected(Graph graph){
+        for (Graph g:graphs){
+            if (g.isIntersected(graph)) return true;
+        }
+        for (Shape s:shapes) {
+            if (s.isIntersected(graph)) return true;
+        }
         return false;
     }
 

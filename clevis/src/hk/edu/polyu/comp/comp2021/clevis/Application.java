@@ -9,6 +9,14 @@ public class Application {
     public static boolean guard = true;
 
     public static void main(String[] args){
+        if (args.length<4 || !args[0].equals("-html") || !args[2].equals("-txt")){
+            System.out.println("Error Argument!");
+            return;
+        }else {
+            LogMech.setHtmlName(args[1]);
+            LogMech.setTxtName(args[3]);
+        }
+
         System.out.println("Welcome to use Clevis!");
         Scanner scanIn = new Scanner(System.in);
         Shell shell;
@@ -16,6 +24,7 @@ public class Application {
             try {
                 System.out.print("Please enter your command: ");
                 String inputString = scanIn.nextLine();
+                LogMech.write(inputString);
                 shell = new Shell(inputString);
             }catch (Exception e){
                 System.out.println("Your command is not correct, please try again!");
@@ -74,11 +83,12 @@ public class Application {
             }
             case "pick-and-move":{
                 Clevis.pickAndMove(s.getPoint1(),s.getDistance1(),s.getDistance2());
+                break;
             }
             case "intersect":{
                 boolean isInc;
-                String s1 = s.getShapeList().get(1);
-                String s2 = s.getShapeList().get(2);
+                String s1 = s.getShapeList().get(0);
+                String s2 = s.getShapeList().get(1);
 
                 if (Clevis.findGraph(s1) != null && Clevis.findGraph(s2) != null){
                     isInc = Clevis.findGraph(s1).isIntersected(Clevis.findGraph(s2));
