@@ -15,33 +15,21 @@ public class Shape {
         for (String s : shapeList) {
             // make sure that it is a graph or shape
             if (Clevis.findGraph(s) != null) {
+                // Migration
                 graphs.add(Clevis.findGraph(s));
+                Clevis.innerRemove(Clevis.findGraph(s));
             }
             else if (Clevis.findShape(s) != null) {
+                // Migration
                 shapes.add(Clevis.findShape(s));
+                Clevis.innerRemove(Clevis.findShape(s));
             }
         }
-        update();
+        makeZcode();
+        System.out.println("The shapes zcode is" + zcode +".");
     }
-    private void update(){
-        // check if empty
-        if(shapes.size()+ graphs.size() == 0){
-            deleteSelf();
-            System.out.println(this.name +" has been empty,it will be deleted!");
-            return;
-        }
-
-        // update zcode
-        int num = 0;
-        for (Shape s : shapes) {
-            num = Math.max(s.getZcode(), num);
-        }
-        for (Graph g :graphs){
-            num = Math.max(g.getZcode(), num);
-        }
-        zcode = num;
-
-        // update arg
+    private void makeZcode(){
+        // initialization
         if (shapes.size() != 0){
             xMax = shapes.get(0).xMax;
             xMin = shapes.get(0).xMin;
@@ -53,6 +41,7 @@ public class Shape {
             yMax = graphs.get(0).yMax;
             yMin = graphs.get(0).yMin;
         }
+        // update arg
         for(Graph graph:graphs){
             xMax = Math.max(xMax,graph.xMax);
             xMin = Math.min(xMin,graph.xMin);
@@ -65,6 +54,17 @@ public class Shape {
             yMax = Math.max(yMax,shape.yMax);
             yMin = Math.min(yMin,shape.yMin);
         }
+        // update zcode
+        int num = 0;
+        for (Shape s : shapes) {
+            num = Math.max(s.getZcode(), num);
+        }
+        for (Graph g :graphs){
+            num = Math.max(g.getZcode(), num);
+        }
+        zcode = num;
+
+
     }
 
     public void listSelf(int indentation){
@@ -85,25 +85,22 @@ public class Shape {
         }
     }
     public void ungroup(){
+        for (Graph graph:graphs){
+            // Migration
+            Clevis.addGraph(graph);
+        }
+        for (Shape shape:shapes){
+            // Migration
+            Clevis.addShape(shape);
+        }
         shapes.clear();
         graphs.clear();
-        if (Clevis.isShapeInShape(this.getName())){
-            Shape s = Clevis.findShapeInShape(this.getName());
-            s.remove(this);
-        }
-
+        Clevis.innerRemove(this);
     }
 
     public void boundingbox(){
         System.out.println(xMin + " " + yMax + " " + (xMax-xMin) + " " +(yMax-yMin));
     }
-    public String getName() {
-        return name;
-    }
-    public int getZcode(){
-        return zcode;
-    }
-
 
     public boolean isIntersected(Shape shape) {
         return false;
@@ -120,38 +117,6 @@ public class Shape {
             shape.move(dx, dy);
         }
     }
-    public boolean contain(Shape s){
-        return shapes.contains(s);
-    }
-    public boolean contain(Graph g){
-        return graphs.contains(g);
-    }
-
-    public void deleteSelf() {
-        for (Graph graph:graphs)
-            Clevis.innerDelete(graph);
-        graphs.clear();
-        for (Shape shape:shapes)
-            Clevis.innerDelete(shape);
-        shapes.clear();
-        Clevis.innerDelete(this);
-        if (Clevis.isShapeInShape(name))
-            Clevis.findShapeInShape(name).delete(this);
-    }
-    public void delete(Graph g){
-        graphs.remove(g);
-        update();
-    }
-    public void delete(Shape s){
-        shapes.remove(s);
-        s.deleteSelf();
-        update();
-    }
-    public void remove(Shape s){
-        shapes.remove(s);
-        update();
-    }
-
     public boolean isContained(Point p) {
         for (Graph graph : graphs) {
             if(graph.isContained(p)) return true;
@@ -160,6 +125,14 @@ public class Shape {
             if(shape.isContained(p)) return true;
         }
         return false;
+    }
+
+    // -------------- standardize ----------------
+    public String getName() {
+        return name;
+    }
+    public int getZcode(){
+        return zcode;
     }
 }
 

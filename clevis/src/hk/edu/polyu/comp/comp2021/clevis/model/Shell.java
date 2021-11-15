@@ -31,27 +31,26 @@ public class Shell {
 
 
         switch (actionType) {
-            case "rectangle":
+            case "rectangle":{
                 if (size != 6) throw new IllegalArgumentException();
                 name = cfName(keyword.get(1));
                 point1 = new Point(Double.parseDouble(keyword.get(2)), Double.parseDouble(keyword.get(3)));
                 distance1 = safePosiNum(keyword.get(4));
                 distance2 = safePosiNum(keyword.get(5));
-                break;
-            case "line":
+                break;}
+            case "line":{
                 if (size != 6) throw new IllegalArgumentException();
                 name = cfName(keyword.get(1));
                 point1 = new Point(Double.parseDouble(keyword.get(2)), Double.parseDouble(keyword.get(3)));
                 point2 = new Point(Double.parseDouble(keyword.get(4)), Double.parseDouble(keyword.get(5)));
-                break;
+                break;}
             case "circle": // same with square
-            case "square":
-                if (size != 5) throw new IllegalArgumentException();
+            case "square": {if (size != 5) throw new IllegalArgumentException();
                 name = cfName(keyword.get(1));
                 point1 = new Point(Double.parseDouble(keyword.get(2)), Double.parseDouble(keyword.get(3)));
                 distance1 = safePosiNum(keyword.get(4));
-                break;
-            case "group":
+                break;}
+            case "group":{
                 name = cfName(keyword.get(1));
                 // no arg
                 if (keyword.size() < 3) throw new IllegalArgumentException();
@@ -62,39 +61,34 @@ public class Shell {
                         System.out.println("One shape doesn't exist!");
                         throw new  IllegalArgumentException();
                     }
-                    // overlapping
-                    if (Clevis.isShapeInShape(k) || Clevis.isGraphInShape(k)){
-                        System.out.println("Overlapping!");
-                        throw new IllegalArgumentException();
-                    }
                     shapeList.add(k);
                 }
-                break;
-            case "ungroup": // same as below
+                break;}
+            case "ungroup": {
                 if (size != 2) throw new IllegalArgumentException();
                 name = safeName(keyword.get(1));
                 if (Clevis.findShape(name) == null){
                     System.out.println("This Shape doesn't exist!");
                     throw new IllegalArgumentException();
                 }
-                break;
+                break;}
             case "delete":  // same as below
             case "list":    // same as below
-            case "boundingbox":
+            case "boundingbox":{
                 if (size != 2) throw new IllegalArgumentException();
                 name = safeName(keyword.get(1));
                 if (Clevis.findGraph(name) == null && Clevis.findShape(name) == null){
                     System.out.println("One shape doesn't exist!");
                     throw new IllegalArgumentException();
                 }
-                break;
-            case "pick-and-move":
+                break;}
+            case "pick-and-move":{
                 if (size != 5) throw new IllegalArgumentException();
                 point1 = new Point(Double.parseDouble(keyword.get(1)), Double.parseDouble(keyword.get(2)));
                 distance1 = Double.parseDouble(keyword.get(3));
                 distance2 = Double.parseDouble(keyword.get(4));
-                break;
-            case "intersect":
+                break;}
+            case "intersect":{
                 if (size != 3) throw new IllegalArgumentException();
                 if (safeName(keyword.get(1)).equals(safeName(keyword.get(2)))){
                     System.out.println("Same Shape!");
@@ -111,9 +105,8 @@ public class Shell {
                 }
                 shapeList.add(keyword.get(1));
                 shapeList.add(keyword.get(2));
-                break;
-            case "move":
-                if (size != 4) throw new IllegalArgumentException();
+                break;}
+            case "move": {if (size != 4) throw new IllegalArgumentException();
                 name = safeName(keyword.get(1));
                 if (Clevis.findGraph(name) == null && Clevis.findShape(name) == null){
                     System.out.println("One shape doesn't exist!");
@@ -121,13 +114,12 @@ public class Shell {
                 }
                 distance1 = Double.parseDouble(keyword.get(2));
                 distance2 = Double.parseDouble(keyword.get(3));
-                break;
+                break;}
             case "listAll": // same as below
             case "undo": // same as below
             case "redo": // same as below
-            case "quit":
-                if (size != 1) throw new IllegalArgumentException();
-                break;
+            case "quit": {if (size != 1) throw new IllegalArgumentException();
+                break;}
             default:
                 System.out.println("Unknown command!");
                 throw new IllegalArgumentException();
@@ -171,7 +163,7 @@ public class Shell {
     }
     // Name is not conflict with exist
     String cfName(String s){
-        if (Clevis.findShape(s) == null && Clevis.findGraph(s) == null)
+        if (!Clevis.cfName(s))
             return safeName(s);
         else {
             System.out.println("Name Conflict!");

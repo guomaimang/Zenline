@@ -10,10 +10,11 @@ public abstract class Graph {
     protected double xMax;
     protected double yMin;
     protected double yMax;
-    private static int num = -1;
+    private static int num = 0;
 
     public Graph(){
-        zcode = num++;
+        zcode = ++num;
+        System.out.println("The graph's zcode is "+ zcode + "." );
     }
 
     public void move(double dx,double dy){

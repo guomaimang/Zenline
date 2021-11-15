@@ -58,11 +58,10 @@ public class Application {
                 break;
             }
             case "ungroup":{
-                Clevis.ungroup(Clevis.findShape(s.getName()));
+                Clevis.findShape(s.getName()).ungroup();
             }
             case "delete":{
                 Clevis.delete(s.getName());
-                System.out.println("Successful!");
                 break;
             }
             case "boundingbox":{
@@ -115,8 +114,6 @@ public class Application {
                 LogMech.outputTxt();
             }
             }
-
-
         }
 
 }
