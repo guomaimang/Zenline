@@ -103,6 +103,7 @@ public class Application {
                 break;}
             case "listAll":{
                 Clevis.listAll();
+                break;
             }
             case "NULL":{
                 break;

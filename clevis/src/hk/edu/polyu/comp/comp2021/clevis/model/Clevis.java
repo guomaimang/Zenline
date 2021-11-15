@@ -77,8 +77,8 @@ public class Clevis {
         for (Graph graph : graphs) {
             System.out.println(graph.listSelf(1));
         }
+        System.out.println("Shapes in Clevis:");
         for (Shape shape : shapes) {
-            System.out.println("Shapes in Clevis:");
             shape.listSelf(1);
         }
     }

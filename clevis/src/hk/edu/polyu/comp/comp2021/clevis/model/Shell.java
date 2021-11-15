@@ -126,7 +126,7 @@ public class Shell {
             case "undo": // same as below
             case "redo": // same as below
             case "quit":
-                if (size != 6) throw new IllegalArgumentException();
+                if (size != 1) throw new IllegalArgumentException();
                 break;
             default:
                 System.out.println("Unknown command!");
