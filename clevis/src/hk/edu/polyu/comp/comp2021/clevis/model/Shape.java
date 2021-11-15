@@ -23,11 +23,11 @@ public class Shape {
         }
         update();
     }
-    private void update(){
+    public void update(){
         // check if empty
         if(shapes.size()+ graphs.size() == 0){
-            deleteSelf();
-            System.out.println(this.name +" has been empty,it will be deleted!");
+            Clevis.delete(this.name);
+            System.out.println(this.name +" will be deleted!");
             return;
         }
 
@@ -89,7 +89,7 @@ public class Shape {
         graphs.clear();
         if (Clevis.isShapeInShape(this.getName())){
             Shape s = Clevis.findShapeInShape(this.getName());
-            s.remove(this);
+            s.ungroup(this);
         }
 
     }
@@ -131,23 +131,21 @@ public class Shape {
         for (Graph graph:graphs)
             Clevis.innerDelete(graph);
         graphs.clear();
-        for (Shape shape:shapes)
+        for (Shape shape:shapes){
             Clevis.innerDelete(shape);
+            shape.deleteSelf();
+        }
         shapes.clear();
-        Clevis.innerDelete(this);
-        if (Clevis.isShapeInShape(name))
-            Clevis.findShapeInShape(name).delete(this);
     }
-    public void delete(Graph g){
+    public void innerRemove(Graph g){
         graphs.remove(g);
         update();
     }
-    public void delete(Shape s){
+    public void innerRemove(Shape s){
         shapes.remove(s);
-        s.deleteSelf();
         update();
     }
-    public void remove(Shape s){
+    private void ungroup(Shape s){
         shapes.remove(s);
         update();
     }
