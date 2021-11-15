@@ -76,10 +76,10 @@ public class Clevis {
         Shape s = null;
         for(Shape shape:shapes){
             if (shape.isContained(p) && shape.getZcode() > zcode) {
-                    s = shape;
-                    zcode = s.getZcode();
-                }
+                s = shape;
+                zcode = s.getZcode();
             }
+        }
         for(Graph graph:graphs){
             if (graph.isContained(p) && graph.getZcode() > zcode){
                 g = graph;
@@ -107,7 +107,7 @@ public class Clevis {
     public static Graph findGraph(String name){
         for (Graph graph : graphs) {
             if (graph.getName().equals(name)) return graph;
-            }
+        }
         return null;
     }
     public static Shape findShape(String name) {
