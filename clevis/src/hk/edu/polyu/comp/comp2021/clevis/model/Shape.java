@@ -99,7 +99,7 @@ public class Shape {
     }
 
     public void boundingbox(){
-        System.out.println(xMin + " " + yMax + " " + (xMax-xMin) + " " +(yMax-yMin));
+        System.out.println(String.format("%.2f",xMin)+ " " + String.format("%.2f",yMax) + " " + String.format("%.2f",(xMax-xMin)) + " " +String.format("%.2f",((yMax-yMin))));
     }
 
     public boolean isIntersected(Shape shape) {
