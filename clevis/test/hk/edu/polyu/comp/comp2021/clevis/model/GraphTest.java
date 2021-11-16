@@ -4,7 +4,7 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CircleTest {
+public class GraphTest {
 
     @Test
     public void testConstructor() {
@@ -27,25 +27,20 @@ public class CircleTest {
         Point p2 = new Point(10, 16);
         Assert.assertFalse(c.isContained(p2));
 
-        Point p3 = new Point(5, 10);
-        Assert.assertTrue(c.isContained(p3));
-
-        Point p4 = new Point(5, 5);
-        Assert.assertFalse(c.isContained(p4));
     }
 
     @Test
     public void testListSelf() {
         Point p = new Point(10, 10);
         Circle c = new Circle("yuan", p, 5.0);
-        c.listSelf(0);
+        System.out.println(c.listSelf(1));
     }
 
     @Test
     public void testIsIntersectedRectangle() {
         Circle c = new Circle("yuan", new Point(10, 10), 5.0);
         Rectangle r = new Rectangle("changfangxing", new Point(10, 10), 2, 6);
-//        Assert.assertTrue(c.isIntersected(r));
+        Assert.assertTrue(c.isIntersected(r));
 
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Rectangle r2 = new Rectangle("changfangxing2", new Point(16, 16), 2, 6);
@@ -75,18 +70,21 @@ public class CircleTest {
 
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Line l2 = new Line("xian2", new Point(6, 6), new Point(8, 8));
-//        Assert.assertTrue(c2.isIntersected(l2));
+        Assert.assertTrue(c2.isIntersected(l2));
+
     }
 
     @Test
     public void testIsIntersectedSquare() {
         Circle c = new Circle("yuan1", new Point(10, 10), 5.0);
         Square s = new Square("zhengfangxing1", new Point(10, 10), 6);
-//        Assert.assertTrue(c.isIntersected(s));
+        Assert.assertFalse(c.isIntersected(s));
+
 
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Square s2 = new Square("zhengfangxing2", new Point(16, 16), 6);
-//        Assert.assertFalse(c2.isIntersected(s2));
+        Assert.assertTrue(c2.isIntersected(s2));
+
     }
 
 }
