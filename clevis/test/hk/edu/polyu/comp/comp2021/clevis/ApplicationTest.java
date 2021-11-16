@@ -74,10 +74,12 @@ public class ApplicationTest {
     public void testIsIntersectedRectangle() {
         Circle c = new Circle("yuan", new Point(10, 10), 5.0);
         Rectangle r = new Rectangle("changfangxing", new Point(10, 10), 2, 6);
+        Rectangle r3 = new Rectangle("changfangxing", new Point(9, 9), 10, 10);
         Square s = new Square("changfangxing", new Point(10, 10), 2);
         Assert.assertEquals(r.listSelf(1),"   Rectangle: Name: changfangxing Point(Left-Top): x= 10.00 y= 10.00 Width= 2.00 Height= 6.00");
         Assert.assertTrue(c.isIntersected(r));
         Assert.assertTrue(c.isIntersected((Graph) r));
+        Assert.assertTrue(r.isIntersected((Graph) r3));
         Assert.assertTrue(r.isIntersected((Graph) r));
 
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);

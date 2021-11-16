@@ -1,13 +1,31 @@
 package hk.edu.polyu.comp.comp2021.clevis;
 
 import hk.edu.polyu.comp.comp2021.clevis.model.*;
+
+import java.util.Objects;
 import java.util.Scanner;
+
+/**
+ *
+ * Starter
+ * @ Han Jiaming
+ * 11.3/2021
+ *
+ */
+
 
 public class Application {
 
     // if guard the process
-    public static boolean guard = true;
+    private static boolean guard = true;
 
+    /**
+     *
+     * Starter
+     * use args
+     *
+     * @param args -html log.html -txt -txt txt.html
+     */
     public static void main(String[] args){
         if (args.length<4 || !args[0].equals("-html") || !args[2].equals("-txt")){
             System.out.println("Error Argument!");
@@ -28,17 +46,25 @@ public class Application {
                 shell = new Shell(inputString);
             }catch (Exception e){
                 System.out.println("Your command is not correct, please try again!");
-                shell = null;
+                shell = new Shell("NULL");
             }
                 opc(shell);
         }
         scanIn.close();
     }
 
-    // to-do block
-    // RECTANGLE,LINE,CIRCLE,SQUARE,GROUP,UNGROUP,BOUNDINGBOX,DELETE,MOVE,PICK_AND_MOVE,INTERSECT,LIST,LISTALL,QUIT,REDO,UNDO
+
+    /**
+     *
+     * to-do block
+     * @ Han Jiaming
+     * 11.3/2021
+     * RECTANGLE,LINE,CIRCLE,SQUARE,GROUP,UNGROUP,BOUNDINGBOX,DELETE,MOVE,PICK_AND_MOVE,INTERSECT,LIST,LISTALL,QUIT,REDO,UNDO
+     * @param s is an object of Shell
+     *
+     */
     public static void opc(Shell s){
-        if(s == null) return;
+        if(s == null || s.getActionType().equals("NULL")) return;
 
         switch (s.getActionType()) {
             case "rectangle": {
@@ -67,7 +93,7 @@ public class Application {
                 break;
             }
             case "ungroup":{
-                Clevis.findShape(s.getName()).ungroup();
+                Objects.requireNonNull(Clevis.findShape(s.getName())).ungroup();
             }
             case "delete":{
                 Clevis.delete(s.getName());
@@ -91,16 +117,16 @@ public class Application {
                 String s2 = s.getShapeList().get(1);
 
                 if (Clevis.findGraph(s1) != null && Clevis.findGraph(s2) != null){
-                    isInc = Clevis.findGraph(s1).isIntersected(Clevis.findGraph(s2));
+                    isInc = Objects.requireNonNull(Clevis.findGraph(s1)).isIntersected(Clevis.findGraph(s2));
                 }
                 else if (Clevis.findGraph(s1) != null && Clevis.findGraph(s2) == null){
-                    isInc = Clevis.findShape(s2).isIntersected(Clevis.findGraph(s1));
+                    isInc = Objects.requireNonNull(Clevis.findShape(s2)).isIntersected(Clevis.findGraph(s1));
                 }
                 else if (Clevis.findGraph(s1) == null && Clevis.findGraph(s2) != null){
-                    isInc = Clevis.findShape(s1).isIntersected(Clevis.findGraph(s2));
+                    isInc = Objects.requireNonNull(Clevis.findShape(s1)).isIntersected(Clevis.findGraph(s2));
                 }
                 else{
-                    isInc = Clevis.findShape(s1).isIntersected(Clevis.findShape(s2));
+                    isInc = Objects.requireNonNull(Clevis.findShape(s1)).isIntersected(Clevis.findShape(s2));
                 }
 
                 if (isInc) System.out.println("They are intersected");

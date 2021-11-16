@@ -2,7 +2,15 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * This Class will process the string user input
+ * @ ShuKunxin
+ * @ HanJiaming
+ *
+ */
 public class Shell {
+
     private final String actionType;
     private String name;
     private Point point1;
@@ -11,7 +19,18 @@ public class Shell {
     private Double distance1;
     private Double distance2;
 
+    private static final int INT1 = 97;
+    private static final int INT2 = 122;
+    private static final int INT3 = 65;
+    private static final int INT4 = 90;
+    private static final int INT5 = 57;
+    private static final int INT6 = 48;
+
     // throws IndexOutOfBoundsException, IllegalArgumentException, NumberFormatException
+    /**
+     * starter
+     * @param s is what user input
+     */
     public Shell(String s) {
         // S  is not null
         if(s.equals(""))
@@ -118,42 +137,30 @@ public class Shell {
             case "listAll": // same as below
             case "undo": // same as below
             case "redo": // same as below
+            case "NULL": // same as below
             case "quit": {if (size != 1) throw new IllegalArgumentException();
                 break;}
             default:
                 System.out.println("Unknown command!");
                 throw new IllegalArgumentException();
         }
-        watcher();
     }
 
     // a tool to see attribute
-    void watcher(){
-        System.out.println(actionType);
-        if (name != null) System.out.println(name);
-        if (point1 != null) System.out.println(point1.x + " " + point1.y);
-        if (point2 != null) System.out.println(point2.x + " " + point2.y);
-        for (String s : shapeList) {
-            System.out.print(s + " ");
-        }
-        System.out.println();
-        if (point1 != null) System.out.println(distance1);
-        if (point1 != null) System.out.println(distance2);
-    }
     // Name is beginning with alphabet and with (letter or number)
-    String safeName(String s){
+    private String safeName(String s){
         char c = s.charAt(0);
-        boolean sLetter = (c >= 97  && c <= 122);
-        boolean bLetter = (c >= 65  && c <= 90 );
+        boolean sLetter = (c >= INT1 && c <= INT2);
+        boolean bLetter = (c >= INT3 && c <= INT4);
 
         if(!(sLetter || bLetter)){
             System.out.println("Shape name with non-letter beginning!");
             throw new IllegalArgumentException();}
         for (int i = 1; i < s.length(); i++) {
             c = s.charAt(i);
-            sLetter = (c >= 97  && c <= 122);
-            bLetter = (c >= 65  && c <= 90 );
-            boolean nLetter = (c <= 57 && c >= 48);
+            sLetter = (c >= INT1 && c <= INT2);
+            bLetter = (c >= INT3 && c <= INT4);
+            boolean nLetter = (c <= INT5 && c >= INT6);
             if ( !(sLetter|| bLetter || nLetter) ){
                 System.out.println("Shape name with illegal character!");
                 throw new IllegalArgumentException();
@@ -162,7 +169,7 @@ public class Shell {
         return s;
     }
     // Name is not conflict with exist
-    String cfName(String s){
+    private String cfName(String s){
         if (!Clevis.cfName(s))
             return safeName(s);
         else {
@@ -171,7 +178,7 @@ public class Shell {
         }
     }
     // ensure a num is positive
-    double safePosiNum(String s){
+    private double safePosiNum(String s){
         double num = Double.parseDouble(s);
         if (num<=0) {
             System.out.println("You provide a illegal number!");
@@ -181,24 +188,47 @@ public class Shell {
 
 
     // -------------Standardization--------------
+    /**
+     * @return actionType
+     *
+     */
     public String getActionType() {
         return actionType;
     }
+    /**
+     * @return name
+     */
     public String getName() {
         return name;
     }
+    /**
+     * @return point 1
+     */
     public Point getPoint1() {
         return point1;
     }
+    /**
+     * @return point 2
+     */
     public Point getPoint2() {
         return point2;
     }
+    /**
+     * @return ShapeList
+     */
     public ArrayList<String> getShapeList() {
         return shapeList;
     }
+    /**
+     * @return distance 1
+     *
+     */
     public Double getDistance1() {
         return distance1;
     }
+    /**
+     * @return distance 2
+     */
     public Double getDistance2() {
         return distance2;
     }

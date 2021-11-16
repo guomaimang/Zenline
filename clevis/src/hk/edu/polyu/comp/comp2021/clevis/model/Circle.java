@@ -99,6 +99,6 @@ public class Circle extends Graph{
     @Override
     // @HanJiaming
     public boolean isIntersected(Square that) {
-        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+        return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
     }
 }

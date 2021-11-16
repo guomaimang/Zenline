@@ -1,10 +1,8 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
-import javax.lang.model.element.Name;
-
 public class Square extends Graph{
-    final double width;
-    final double height;
+    private final double width;
+    private final double height;
 
     public Square(String name, Point p, double l) {
         this.name = name;
@@ -31,14 +29,14 @@ public class Square extends Graph{
 
     @Override
     public boolean isIntersected(Square that) {
-        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+        return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
     }
 
     @Override
     protected void update() {
         xMin = (getLocation().x);
-        xMax = (getLocation().x + width);
-        yMin = (getLocation().y - height);
+        xMax = (getLocation().x + getWidth());
+        yMin = (getLocation().y - getHeight());
         yMax = (getLocation().y);
     }
 
@@ -53,7 +51,15 @@ public class Square extends Graph{
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f",location.x) + " y= " + String.format("%.2f",location.y) + " Width= " + String.format("%.2f",width));
+        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f",location.x) + " y= " + String.format("%.2f",location.y) + " Width= " + String.format("%.2f", getWidth()));
 
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
     }
 }

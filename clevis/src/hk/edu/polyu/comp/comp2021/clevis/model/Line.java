@@ -86,6 +86,6 @@ public class Line extends Graph{
     // @JiaoZhiyang
     @Override
     public boolean isIntersected(Square that) {
-        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+        return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
     }
 }

@@ -27,7 +27,7 @@ public class Rectangle extends Graph {
 
     @Override
     public boolean isIntersected(Rectangle that) {
-        return (this.getxMin() > that.getxMax() || that.getxMin() > this.getxMax() ||
+        return !(this.getxMin() > that.getxMax() || that.getxMin() > this.getxMax() ||
                 this.getyMin() > that.getyMax() || that.getyMin() > this.getyMax() ||
                 (this.getyMax() < that.getyMax() &&  this.getyMin() > that.getyMin() && this.getxMax() < that.getxMax() && this.getxMin() > that.getyMax())||
                 (that.getyMax() < this.getyMax() &&  that.getyMin() > this.getyMin() && that.getxMax() < this.getxMax() && that.getxMin() > this.getyMax()));
@@ -45,7 +45,7 @@ public class Rectangle extends Graph {
 
     @Override
     public boolean isIntersected(Square that) {
-        return isIntersected(new Rectangle("",that.getLocation(),that.width,that.height));
+        return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
     }
 
     @Override
