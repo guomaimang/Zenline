@@ -34,24 +34,24 @@ public class Square extends Graph{
 
     @Override
     protected void update() {
-        xMin = (getLocation().x);
-        xMax = (getLocation().x + getWidth());
-        yMin = (getLocation().y - getHeight());
-        yMax = (getLocation().y);
+        xMin = (getLocation().getX());
+        xMax = (getLocation().getX() + getWidth());
+        yMin = (getLocation().getY() - getHeight());
+        yMax = (getLocation().getY());
     }
 
     @Override
     public boolean isContained(Point p) {
-        return new Circle("",p,error).isIntersected(this);
+        return new Circle("",p, getError()).isIntersected(this);
     }
 
     @Override
     public String listSelf(int indentation) {
-        String outcome = new String("");
+        String outcome = "";
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f",location.x) + " y= " + String.format("%.2f",location.y) + " Width= " + String.format("%.2f", getWidth()));
+        return outcome + ( "Square" + "Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f", location.getX()) + " y= " + String.format("%.2f", location.getY()) + " Width= " + String.format("%.2f", getWidth()));
 
     }
 

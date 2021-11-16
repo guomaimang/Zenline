@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Clevis {
 
@@ -8,39 +9,39 @@ public class Clevis {
     private static final ArrayList<String> nameList = new ArrayList<>();
 
     public static void addGraph(Graph g){
-        graphs.add(g);
-        nameList.add(g.getName());
+        getGraphs().add(g);
+        getNameList().add(g.getName());
     }
     public static void addShape(Shape c){
-        shapes.add(c);
-        nameList.add(c.getName());
+        getShapes().add(c);
+        getNameList().add(c.getName());
     }
 
 
     public static void delete(String name) {
         // check for graph
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(name)) {
-                graphs.remove(graph);
+                getGraphs().remove(graph);
                 return;
                 }
         }
         // check for shape
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(name)) {
-               shapes.remove(shape);
+               getShapes().remove(shape);
                 return;
             }
         }
     }
     public static void list(String shapeName){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(shapeName)) {
                 System.out.println(graph.listSelf(0));
                 return;
             }
         }
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(shapeName)) {
                 shape.listSelf(0);
                 return;
@@ -49,28 +50,28 @@ public class Clevis {
     }
     public static void listAll() {
         System.out.println("Graphs in Clevis:");
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             System.out.println(graph.listSelf(1));
         }
         System.out.println("Shapes in Clevis:");
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             shape.listSelf(1);
         }
     }
     public static void boundingbox(String name){
-        if (findShape(name)!= null) findShape(name).boundingbox();
-        else if (findGraph(name)!= null) findGraph(name).boundingbox();
+        if (findShape(name)!= null) Objects.requireNonNull(findShape(name)).boundingbox();
+        else if (findGraph(name)!= null) Objects.requireNonNull(findGraph(name)).boundingbox();
     }
 
     public static void move(String name,double dx, double dy){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(name)) {
                 graph.move(dx, dy);
                 return;
             }
         }
 
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(name)) {
                 shape.move(dx,dy);
                 return;
@@ -79,16 +80,16 @@ public class Clevis {
     }
     public static void pickAndMove(Point p,double dx,double dy){
         int zcode = 0;
-        String name = new String("");
+        String name = "";
 
-        for(Shape shape:shapes){
+        for(Shape shape: getShapes()){
             if (shape.isContained(p) && shape.getZcode() > zcode) {
                     zcode = shape.getZcode();
                     name = shape.getName();
                 }
             }
 
-        for(Graph graph:graphs){
+        for(Graph graph: getGraphs()){
             if (graph.isContained(p) && graph.getZcode() > zcode){
                 zcode = graph.getZcode();
                 name = graph.getName();
@@ -102,16 +103,16 @@ public class Clevis {
     }
 
     public static boolean cfName(String name){
-       return nameList.contains(name);
+       return getNameList().contains(name);
     }
     public static Graph findGraph(String name){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(name)) return graph;
             }
         return null;
     }
     public static Shape findShape(String name) {
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(name)) {
                 return shape;
             }
@@ -120,10 +121,21 @@ public class Clevis {
     }
 
     public static void innerRemove(Graph graph) {
-        graphs.remove(graph);
+        getGraphs().remove(graph);
     }
     public static void innerRemove(Shape shape){
-        shapes.remove(shape);
+        getShapes().remove(shape);
     }
 
+    public static ArrayList<Graph> getGraphs() {
+        return graphs;
+    }
+
+    public static ArrayList<Shape> getShapes() {
+        return shapes;
+    }
+
+    public static ArrayList<String> getNameList() {
+        return nameList;
+    }
 }

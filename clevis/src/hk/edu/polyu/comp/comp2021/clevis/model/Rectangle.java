@@ -6,8 +6,8 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
  */
 
 public class Rectangle extends Graph {
-    final double width;
-    final double height;
+    private final double width;
+    private final double height;
 
     public Rectangle(String name, Point p, double w, double h) {
         this.name  = name;
@@ -18,11 +18,11 @@ public class Rectangle extends Graph {
     }
     @Override
     public String listSelf(int indentation) {
-        String outcome = new String("");
+        String outcome = "";
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome + ("Rectangle:" +" Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f",location.x) + " y= " + String.format("%.2f",location.y) + " Width= " + String.format("%.2f",width) + " Height= "+ String.format("%.2f",height));
+        return outcome + ("Rectangle:" +" Name: " + name + " Point(Left-Top): x= " +  String.format("%.2f", location.getX()) + " y= " + String.format("%.2f", location.getY()) + " Width= " + String.format("%.2f", getWidth()) + " Height= "+ String.format("%.2f", getHeight()));
     }
 
     @Override
@@ -50,14 +50,22 @@ public class Rectangle extends Graph {
 
     @Override
     protected void update() {
-        xMin = location.x;
-        xMax = (location.x + width);
-        yMin = (location.y - height);
-        yMax = (location.y);
+        xMin = location.getX();
+        xMax = (location.getX() + getWidth());
+        yMin = (location.getY() - getHeight());
+        yMax = (location.getY());
     }
 
     @Override
     public boolean isContained(Point p) {
-        return new Circle("",p,error).isIntersected(this);
+        return new Circle("",p, getError()).isIntersected(this);
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
     }
 }

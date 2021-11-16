@@ -3,8 +3,10 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
 public abstract class Graph {
     protected String name;
     protected Point location;
-    final double error = 0.05;
     protected final int zcode;
+    public double getError() {
+        return 0.05;
+    }
 
     protected double xMin;
     protected double xMax;
@@ -18,7 +20,7 @@ public abstract class Graph {
     }
 
     public void move(double dx,double dy){
-        location = (new Point(dx+ getLocation().x,dy+ getLocation().y));
+        location = (new Point(dx+ getLocation().getX(),dy+ getLocation().getY()));
         this.update();
     }
     protected abstract void update();
@@ -77,6 +79,7 @@ public abstract class Graph {
     public double getyMax() {
         return yMax;
     }
+
 
 }
 

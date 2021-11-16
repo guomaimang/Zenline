@@ -9,13 +9,13 @@ public class Line extends Graph{
     public Line(String name,Point p1,Point p2){
         this.name  = name;
         location = p1;
-        location2 = p2;
+        setLocation2(p2);
         update();
     }
 
     @Override
     public boolean isContained(Point p) {
-        return new Circle("",p,error).isIntersected(this);
+        return new Circle("",p, getError()).isIntersected(this);
     }
 
     @Override
@@ -24,22 +24,22 @@ public class Line extends Graph{
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome+("Line" + " Name: " + name + " Point1: x= " + String.format("%.2f",location.x) +" y= " + String.format("%.2f",location.y) + " Point2: x= " + String.format("%.2f",location2.x) + " y= " + String.format("%.2f",location2.y));
+        return outcome+("Line" + " Name: " + name + " Point1: x= " + String.format("%.2f", location.getX()) +" y= " + String.format("%.2f", location.getY()) + " Point2: x= " + String.format("%.2f", getLocation2().getX()) + " y= " + String.format("%.2f", getLocation2().getY()));
     }
 
     @Override
     // @HanJiaming
     public void move(double dx, double dy) {
-        location = (new Point(getLocation().x+dx, getLocation().y+dy));
-        location2 = new Point(location2.x+dx, location2.y+dy);
+        location = (new Point(getLocation().getX() +dx, getLocation().getY() +dy));
+        setLocation2(new Point(getLocation2().getX() +dx, getLocation2().getY() +dy));
     }
 
     @Override
     protected void update() {
-        xMin = Math.min(location.x, location2.x);
-        xMax = Math.max(location.x, location2.x);
-        yMin = Math.max(location.y, location2.y);
-        yMax = Math.max(location.y, location2.y);
+        xMin = Math.min(location.getX(), getLocation2().getX());
+        xMax = Math.max(location.getX(), getLocation2().getX());
+        yMin = Math.max(location.getY(), getLocation2().getY());
+        yMax = Math.max(location.getY(), getLocation2().getY());
     }
 
     @Override
@@ -59,13 +59,13 @@ public class Line extends Graph{
 
     // @JiaoZhiyang,use for isIntersected(Line that)
     private double mul(Point a, Point b) {
-        return a.x * b.x + a.y * b.y;
+        return a.getX() * b.getX() + a.getY() * b.getY();
     }
     private double cha_mul(Point a, Point b) {
-        return a.x * b.x + a.y * b.y;
+        return a.getX() * b.getX() + a.getY() * b.getY();
     }
     private Point sub(Point a, Point b) {
-        return new Point(a.x - b.x, a.y - b.y);
+        return new Point(a.getX() - b.getX(), a.getY() - b.getY());
     }
     private static int sig(double x) {
         return (x > 0.05 ? 1 : 0) - (x < -0.05 ? 1:0);
@@ -77,7 +77,7 @@ public class Line extends Graph{
     // @JiaoZhiyang
     @Override
     public boolean isIntersected(Line that) {
-        Point a = location, b = location2, c = that.location, d = that.location2;
+        Point a = location, b = getLocation2(), c = that.location, d = that.getLocation2();
         if(on_seg(c, d, a) || on_seg(c, d, b) || on_seg(a, b, c) || on_seg(a, b, d))
             return true;
         return sig(cross(b, c, a)* cross(b, d, a)) < 0 && sig(cross(d, a, c)*cross(d, b, c)) < 0;
@@ -87,5 +87,9 @@ public class Line extends Graph{
     @Override
     public boolean isIntersected(Square that) {
         return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
+    }
+
+    public void setLocation2(Point location2) {
+        this.location2 = location2;
     }
 }
