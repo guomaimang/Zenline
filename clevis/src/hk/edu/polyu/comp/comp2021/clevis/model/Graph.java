@@ -52,7 +52,7 @@ public abstract class Graph {
     public abstract boolean isIntersected(Rectangle that);
     public abstract boolean isIntersected(Square that);
     public void boundingbox(){
-        System.out.println(xMin + " " + yMax + " " + (xMax-xMin) + " " +(yMax-yMin));
+        System.out.println(String.format("%.2f",xMin)+ " " + String.format("%.2f",yMax) + " " + String.format("%.2f",(xMax-xMin)) + " " +String.format("%.2f",((yMax-yMin))));
     }
 
     // ---------standardization----------------------
