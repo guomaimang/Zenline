@@ -21,7 +21,7 @@ public class Line extends Graph{
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
-        return outcome+("Line" + " Name: " + name + " Point1: x= " + String.format("%.2f",location.x) +" y= " + String.format("%.2f",location.y) + " Point2: x= " + String.format("%.2f",location2.x) + " y= " + String.format("%.2f",location.y));
+        return outcome+("Line" + " Name: " + name + " Point1: x= " + String.format("%.2f",location.x) +" y= " + String.format("%.2f",location.y) + " Point2: x= " + String.format("%.2f",location2.x) + " y= " + String.format("%.2f",location2.y));
     }
 
     @Override
