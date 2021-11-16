@@ -2,6 +2,9 @@ package hk.edu.polyu.comp.comp2021.clevis.model;
 
 public class Line extends Graph{
     private Point location2;
+    public Point getLocation2(){
+        return location2;
+    }
 
     public Line(String name,Point p1,Point p2){
         this.name  = name;
@@ -17,7 +20,7 @@ public class Line extends Graph{
 
     @Override
     public String listSelf(int indentation) {
-        String outcome = new String("");
+        String outcome = "";
         for (int i = 0; i < indentation; i++) {
             outcome = outcome + "   ";
         }
@@ -50,29 +53,9 @@ public class Line extends Graph{
     @Override
     // @JiaoZhiyang
     public boolean isIntersected(Circle that) {
-        Point O = that.location;
-        Point p1 = location, p2 = location2;
-        double r = that.r;
-        double a, b, c, dist1, dist2, angle1, angle2; // ax + by + c = 0;
-        if (p1.x == p2.x) {
-            a = 1; b = 0;c = -p1.x;//特殊情况判断，分母不能为零
-        }
-        else if (p1.y == p2.y) {
-            a = 0;b = 1; c = -p1.y;//特殊情况判断，分母不能为零
-        }
-        else {
-            a = p1.y - p2.y;
-            b = p2.x - p1.x;
-            c = p1.x * p2.y - p1.y * p2.x;
-        }
-        dist1 = a * O.x + b * O.y + c;
-        dist1 *= dist1;
-        dist2 = (a * a + b * b) * r * r;
-        if (dist1 > dist2) return false;//点到直线距离大于半径r
-        angle1 = (O.x - p1.x) * (p2.x - p1.x) + (O.y - p1.y) * (p2.y - p1.y);
-        angle2 = (O.x - p2.x) * (p1.x - p2.x) + (O.y - p2.y) * (p1.y - p2.y);
-        return angle1 > 0 && angle2 > 0;//余弦都为正，则是锐角
+        return that.isIntersected(this);
     }
+
 
     // @JiaoZhiyang,use for isIntersected(Line that)
     private double mul(Point a, Point b) {

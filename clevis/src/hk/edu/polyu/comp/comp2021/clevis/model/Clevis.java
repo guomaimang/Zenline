@@ -126,5 +126,4 @@ public class Clevis {
         shapes.remove(shape);
     }
 
-    public void printClevis(){}
 }

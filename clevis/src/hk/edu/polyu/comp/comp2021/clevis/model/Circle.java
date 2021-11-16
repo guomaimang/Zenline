@@ -60,10 +60,40 @@ public class Circle extends Graph{
         return !(delta > deltaMax);
     }
 
+    private boolean inCircle(Point p){
+        return (p.x - location.x) * (p.x - location.x) + (p.y - location.y) * (p.y - location.y) - r * r <= 0;
+
+    }
     @Override
     // @JiaoZhiyang ,checked and modify by HanJiaming
     public boolean isIntersected(Line that) {
-        return that.isIntersected(this);
+
+        Point p1 = new Point(that.getLocation().x,that.getLocation().y);
+        Point p2 = new Point(that.getLocation2().x,that.getLocation2().y);
+
+        if (inCircle(p1) && inCircle(p2)) return false;
+        if (!inCircle(p1) && inCircle(p2)) return true;
+        if (inCircle(p1) && !inCircle(p2)) return true;
+
+        double u,v,w,d1,d2,a1,a2;
+        double x = location.x;
+        double y = location.y;
+
+        if(p1.x==p2.x) {u=1;v=0;w= -p1.x;}
+        else if(p1.y==p2.y) {u=0;v=1;w= -p1.y;}
+        else
+        {
+            u = p1.y-p2.y;
+            v = p2.x-p1.x;
+            w = p1.x * p2.y - p1.y*p2.x;
+        }
+        d1 = u * x + v * y + w;
+        d1 *= d1;
+        d2 = (u * u + v * v) * r * r;
+        if (d1 > d2) return false;
+        a1 = (x - p1.x) * (p2.x - p1.x) + (y - p1.y) * (p2.y - p1.y);
+        a2 = (x - p2.x) * (p1.x - p2.x) + (y - p2.y) * (p1.y - p2.y);
+        return a1 > 0 && a2 > 0;
     }
 
     @Override
