@@ -1,195 +1,208 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ *
+ * 11.15/2021
+ * @ HanJiaming
+ *
+ */
 public class Clevis {
 
     private static final ArrayList<Graph> graphs = new ArrayList<>();
     private static final ArrayList<Shape> shapes = new ArrayList<>();
+    private static final ArrayList<String> nameList = new ArrayList<>();
+
+    /**
+     * @param g the graph will be added
+     */
     public static void addGraph(Graph g){
-        graphs.add(g);
-        watcher();
+        getGraphs().add(g);
+        getNameList().add(g.getName());
     }
+
+    /**
+     * @param c the shape will be added
+     */
     public static void addShape(Shape c){
-        shapes.add(c);
-        watcher();
+        getShapes().add(c);
+        getNameList().add(c.getName());
     }
 
-    private static void watcher(){
-        System.out.print("Graph list: ");
-        for (Graph graph : graphs){
-            System.out.print(graph.getName() + " ");
+
+    /**
+     * @param name the shape will be deleted
+     */
+    public static void delete(String name) {
+        // check for graph
+        for (Graph graph : getGraphs()) {
+            if (graph.getName().equals(name)) {
+                getGraphs().remove(graph);
+                return;
+                }
         }
-        System.out.println();
-        System.out.print("Shape list: ");
-        for (Shape shape :shapes){
-            System.out.print(shape.getName() + " ");
+        // check for shape
+        for (Shape shape : getShapes()) {
+            if (shape.getName().equals(name)) {
+               getShapes().remove(shape);
+                return;
+            }
         }
-        System.out.println();
     }
 
+    /**
+     * @param shapeName the shape will be listed
+     */
+  
     public static void list(String shapeName){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(shapeName)) {
                 System.out.println(graph.listSelf(0));
                 return;
             }
         }
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(shapeName)) {
                 shape.listSelf(0);
                 return;
             }
         }
     }
+
+    /**
+     * list all shapes
+     */
     public static void listAll() {
         System.out.println("Graphs in Clevis:");
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             System.out.println(graph.listSelf(1));
         }
-        for (Shape shape : shapes) {
-            System.out.println("Shapes in Clevis:");
+        System.out.println("Shapes in Clevis:");
+        for (Shape shape : getShapes()) {
             shape.listSelf(1);
         }
     }
-    public static void boundingbox(String n){
-        if (findShape(n)!= null) findShape(n).boundingbox();
-        else if (findGraph(n)!= null) findGraph(n).boundingbox();
+
+    /**
+     * @param name return the bounding box
+     */
+    public static void boundingbox(String name){
+        if (findShape(name)!= null) Objects.requireNonNull(findShape(name)).boundingbox();
+        else if (findGraph(name)!= null) Objects.requireNonNull(findGraph(name)).boundingbox();
     }
+
+    /**
+     * @param name return the bounding box
+     * @param dx the x distance
+     * @param dy the y distance
+     */
+
     public static void move(String name,double dx, double dy){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(name)) {
                 graph.move(dx, dy);
                 return;
             }
         }
 
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(name)) {
                 shape.move(dx,dy);
                 return;
             }
         }
     }
+
+    /**
+     * @param p the key point
+     * @param dx the x distance
+     * @param dy the y distance
+     */
     public static void pickAndMove(Point p,double dx,double dy){
         int zcode = 0;
-        Graph g = null;
-        Shape s = null;
-        for(Shape shape:shapes){
+        String name = "";
+
+        for(Shape shape: getShapes()){
             if (shape.isContained(p) && shape.getZcode() > zcode) {
-                s = shape;
-                zcode = s.getZcode();
+                    zcode = shape.getZcode();
+                    name = shape.getName();
+                }
             }
-        }
-        for(Graph graph:graphs){
+      
+        for(Graph graph: getGraphs()){
             if (graph.isContained(p) && graph.getZcode() > zcode){
-                g = graph;
-                zcode = g.getZcode();
+                zcode = graph.getZcode();
+                name = graph.getName();
             }
         }
-        if (zcode == 0) System.out.println("No Operation!");
-        else if (g == null){
-            move(s.getName(),dx,dy);
-        }
-        else if (s == null){
-            move(g.getName(),dx,dy);
-        }else if (s.getZcode() > g.getZcode()){
-            move(s.getName(),dx,dy);
-        }else {
-            move(g.getName(),dx,dy);
-        }
+        if (zcode != 0 && !name.equals(""))
+            move(name,dx,dy);
+        else
+            System.out.println("No such a shape or graph!");
 
     }
-    public static void ungroup(Shape s){
-        s.ungroup();
-        shapes.remove(s);
+
+    /**
+     * @param name for check name if conflict
+     * @return if conflict
+     */
+    public static boolean cfName(String name){
+       return getNameList().contains(name);
     }
 
+    /**
+     * @param name the name of shape
+     * @return the reference of shape or graph
+     */
     public static Graph findGraph(String name){
-        for (Graph graph : graphs) {
+        for (Graph graph : getGraphs()) {
             if (graph.getName().equals(name)) return graph;
         }
         return null;
     }
+    /**
+     * @param name the name of shape
+     * @return the reference of shape or graph
+     */
     public static Shape findShape(String name) {
-        for (Shape shape : shapes) {
+        for (Shape shape : getShapes()) {
             if (shape.getName().equals(name)) {
                 return shape;
             }
         }
         return null;
     }
-    public static boolean isGraphInShape(String name){
-        Graph g = findGraph(name);
-        for (Shape shape : shapes) {
-            if (shape.contain(g)) return true;
-        }
-        return false;
 
+    /**
+     * @param graph will be removed
+     */
+    public static void innerRemove(Graph graph) {
+        getGraphs().remove(graph);
     }
-    public static boolean isShapeInShape(String name){
-        Shape s = findShape(name);
-        for (Shape shape : shapes) {
-            if (shape.contain(s)) return true;
-        }
-        return false;
-
-    }
-    public static Shape findShapeInShape(String name){
-        Shape s = findShape(name);
-        for (Shape shape : shapes) {
-            if (shape.contain(s)) return shape;
-        }
-        return null;
-
+    /**
+     * @param shape will be removed
+     */
+    public static void innerRemove(Shape shape){
+        getShapes().remove(shape);
     }
 
-    public static void delete(String name) {
-        for (Graph graph : graphs) {
-            if (graph.getName().equals(name)) {
-                // remove self in clevis
-                graphs.remove(graph);
-                // remove self in shapes
-                for (Shape shape : shapes) {
-                    if (shape.contain(graph)) {
-                        shape.innerRemove(graph);
-                    }
-                }
-                // remove empty
-                update();
-                return;
-            }
-        }
-        for (Shape shape : shapes) {
-            if (shape.getName().equals(name)) {
-                // remove self in clevis
-                shapes.remove(shape);
-                // remove sub graph in clevis
-                for (Graph g: shape.getGraphs()){
-                    graphs.remove(g);
-                }
-                // remove sub shape in clevis
-                for (Shape s : shape.getShapes()) {
-                    Clevis.delete(s.getName());
-                }
-                // remove self in shapes
-                for (Shape s : shapes) {
-                    if (s.contain(shape)) {
-                        s.innerRemove(shape);
-                    }
-                }
-                // remove empty
-                update();
-                return;
-            }
-        }
-
+    /**
+     * @return graphlist
+     */
+    public static ArrayList<Graph> getGraphs() {
+        return graphs;
     }
-    public static void update(){
-        for (Shape shape:shapes){
-            shape.update();
-            if (shape.getSize() == 0) delete(shape.getName());
-        }
+    /**
+     * @return shapelist
+     */
+    public static ArrayList<Shape> getShapes() {
+        return shapes;
     }
-
-    public void printClevis(){}
+    /**
+     * @return namelist
+     */
+    public static ArrayList<String> getNameList() {
+        return nameList;
+    }
 }
