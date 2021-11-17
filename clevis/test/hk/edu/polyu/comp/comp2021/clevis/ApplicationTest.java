@@ -4,6 +4,7 @@ import hk.edu.polyu.comp.comp2021.clevis.model.*;
 
 import static hk.edu.polyu.comp.comp2021.clevis.Application.opc;
 
+// use JUnit4! Not 5.
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,6 +40,20 @@ public class ApplicationTest {
         opc(new Shell("intersect g3 g1"));
         opc(new Shell("delete g3"));
         opc(new Shell("quit"));
+
+        try{
+            opc(new Shell("quut"));
+        }catch (IllegalArgumentException e){
+            System.out.println("The error has been catch!");
+        }
+
+        try{
+            opc(new Shell("line n2 3"));
+        }catch (IllegalArgumentException e){
+            System.out.println("The error has been catch!");
+        }
+
+
     }
 
     @Test
@@ -54,10 +69,8 @@ public class ApplicationTest {
     public void testIsContainedPoint() {
         Point p = new Point(10, 10);
         Circle c = new Circle("yuan", p, 5.0);
-
         Point p1 = new Point(10, 15);
         Assert.assertTrue(c.isContained(p1));
-
         Point p2 = new Point(10, 16);
         Assert.assertFalse(c.isContained(p2));
 
@@ -75,33 +88,35 @@ public class ApplicationTest {
         Circle c = new Circle("yuan", new Point(10, 10), 5.0);
         Rectangle r = new Rectangle("changfangxing", new Point(10, 10), 2, 6);
         Rectangle r3 = new Rectangle("changfangxing", new Point(9, 9), 10, 10);
+        Point p = new Point(10,10);
+        Assert.assertTrue(r.isContained(p));
+        Square sq = new Square("zhengfangxing1", new Point(10, 10), 6);
         Square s = new Square("changfangxing", new Point(10, 10), 2);
         Assert.assertEquals(r.listSelf(1),"   Rectangle: Name: changfangxing Point(Left-Top): x= 10.00 y= 10.00 Width= 2.00 Height= 6.00");
-        Assert.assertTrue(c.isIntersected(r));
+        Assert.assertTrue(sq.isIntersected((Graph)r));
+        Assert.assertTrue(sq.isIntersected((Graph)s));
+        Assert.assertTrue(c.isIntersected((Graph)r));
         Assert.assertTrue(c.isIntersected((Graph) r));
         Assert.assertTrue(r.isIntersected((Graph) r3));
         Assert.assertTrue(r.isIntersected((Graph) r));
-
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Rectangle r2 = new Rectangle("changfangxing2", new Point(16, 16), 2, 6);
-        Assert.assertFalse(c2.isIntersected(r2));
-        Assert.assertFalse(r2.isIntersected(c2));
-        Assert.assertFalse(s.isIntersected(c2));
+        Assert.assertFalse(c2.isIntersected((Graph) r2));
+        Assert.assertFalse(r2.isIntersected((Graph) c2));
+        Assert.assertFalse(s.isIntersected((Graph) c2));
     }
 
     @Test
     public void testIsIntersectedCircle() {
         Circle c = new Circle("yuan1", new Point(10, 10), 5.0);
         Circle c2 = new Circle("yuan2", new Point(11, 11), 5.0);
-        Assert.assertTrue(c.isIntersected(c2));
-
+        Assert.assertTrue(c.isIntersected((Graph) c2));
         Circle c3 = new Circle("yuan1", new Point(10, 10), 5.0);
         Circle c4 = new Circle("yuan2", new Point(20, 20), 5.0);
-        Assert.assertFalse(c3.isIntersected(c4));
-
+        Assert.assertFalse(c3.isIntersected((Graph) c4));
         Circle c5 = new Circle("yuan1", new Point(10, 10), 5.0);
         Circle c6 = new Circle("yuan2", new Point(0, 0), 5.0);
-        Assert.assertFalse(c5.isIntersected(c6));
+        Assert.assertFalse(c5.isIntersected((Graph) c6));
     }
 
     @Test
@@ -109,13 +124,13 @@ public class ApplicationTest {
         Circle c = new Circle("yuan1", new Point(10, 10), 5.0);
         Line l = new Line("xian", new Point(1, 1), new Point(0, 10));
         Rectangle r2 = new Rectangle("changfangxing2", new Point(0, 0), 2, 6);
-        Assert.assertFalse(c.isIntersected(l));
-        Assert.assertTrue(r2.isIntersected(l));
-
+        Assert.assertFalse(c.isIntersected((Graph) l));
+        Assert.assertTrue(r2.isIntersected((Graph)l));
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Line l2 = new Line("xian2", new Point(6, 6), new Point(8, 8));
-        Assert.assertTrue(c2.isIntersected(l2));
-
+        Assert.assertTrue(c2.isIntersected((Graph) l2));
+        Assert.assertFalse(l.isIntersected((Graph) l2));
+        Assert.assertTrue(l.isIntersected((Graph) l));
     }
 
     @Test
@@ -123,24 +138,36 @@ public class ApplicationTest {
         Circle c = new Circle("yuan1", new Point(10, 10), 5.0);
         Square s = new Square("zhengfangxing1", new Point(10, 10), 6);
         s.listSelf(1);
-        Assert.assertTrue(c.isIntersected(s));
+        Assert.assertTrue(c.isIntersected((Graph) s));
+        Assert.assertTrue(c.isIntersected((Graph) s));
         Assert.assertTrue(c.isIntersected((Graph) s));
         Assert.assertTrue(s.isIntersected((Graph) c));
-
-
         Circle c2 = new Circle("yuan2", new Point(10, 10), 5.0);
         Square s2 = new Square("zhengfangxing2", new Point(16, 16), 6);
-        Assert.assertFalse(c2.isIntersected(s2));
-
+        Assert.assertFalse(c2.isIntersected((Graph) s2));
     }
+
     @Test
     public void LogMechTest(){
+        LogMech.setHtmlName("testLog.html");
+        LogMech.setTxtName("testLog.txt");
         LogMech.write("Line n1 1 4 5 6");
         LogMech.write("group g1 n1");
         LogMech.write("quit");
         LogMech.outputTxt();
         LogMech.outputHtml();
     }
+
+    @Test
+    public void mainTest(){
+        String[] s = {"0","1"};
+        String[] s2 = {"-html","test.html","-txt","test.txt"};
+        Application.main(s);
+        Application.main(s2);
+    }
+
+
+
 
 
 }

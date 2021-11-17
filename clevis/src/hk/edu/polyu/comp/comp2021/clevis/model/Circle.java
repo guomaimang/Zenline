@@ -1,46 +1,77 @@
 package hk.edu.polyu.comp.comp2021.clevis.model;
 
+/**
+ *
+ * @ HanJiaming
+ * 11.7/2021
+ *
+ */
 public class Circle extends Graph{
     private final double r;
 
-    // @JiaoZhiyang, checked and modify by HanJiaming
+    /**
+     * @param name of graph,
+     * @param p is the point of key point
+     * @param r is the round
+     */
     public Circle(String name, Point p,double r){
-        this.name = name;
-        location = p;
+        this.setName(name);
+        setLocation(p);
         this.r = r;
         update();
     }
 
     @Override
     protected void update() {
-        xMin = location.getX() - getR();
-        xMax = location.getX() + getR();
-        yMin = location.getY() - getR();
-        yMax = location.getY() + getR();
+        setxMin(getLocation().getX() - getR());
+        setxMax(getLocation().getX() + getR());
+        setyMin(getLocation().getY() - getR());
+        setyMax(getLocation().getY() + getR());
     }
 
     @Override
-    // @JiaoZhiyang, checked and modify by HanJiaming
     public boolean isContained(Point p) {
         // error < 0.05 can be patience
         double y=(getLocation().getY() - p.getY());
         double x=(getLocation().getX() - p.getX());
         double temp = Math.sqrt(x * x + y * y);
-        return Math.abs(getR() - temp) < getError();
+        return Math.abs(getR() - temp) < getERROR();
     }
 
     @Override
-    // @HanJiaming
     public String listSelf(int indentation) {
-        String outcome = "";
-        for (int i = 0; i < indentation; i++) {
-            outcome = outcome + "   ";
-        }
-        return outcome + ("Circle"+ " Name: " + name +" R: "+ String.format("%.2f", getR()) +" Round Point: " + "x= " + String.format("%.2f", location.getX())  + " y= " + String.format("%.2f", location.getY()));
+        return "   ".repeat(Math.max(0, indentation)) + ("Circle"+ " Name: " + getName() +" R: "+ String.format("%.2f", getR()) +" Round Point: " + "x= " + String.format("%.2f", getLocation().getX())  + " y= " + String.format("%.2f", getLocation().getY()));
     }
 
     @Override
-    // @JiaoZhiyang, checked and modify by HanJiaming
+    public boolean isIntersected(Graph that){
+        Line l;
+        if (that instanceof Line) {
+            l = (Line) that;
+            return this.isIntersected(l);
+        }
+        Circle c;
+        if(that instanceof Circle) {
+            c = (Circle) that;
+            return this.isIntersected(c);
+        }
+        Square s;
+        if(that instanceof Square)  {
+            s = (Square) that;
+            return this.isIntersected(s);
+        }
+        Rectangle r;
+        if(that instanceof Rectangle) {
+            r = (Rectangle) that;
+            return this.isIntersected(r);
+        }
+        else return false;
+    }
+
+    /**
+     * @param that rectangle
+     * @return boolean
+     */
     public boolean isIntersected(Rectangle that) {
         Point a = that.getLocation(), b = new Point(that.getxMax(), that.getyMax());
         Point c= new Point(that.getxMin(), that.getyMin()), d = new Point(that.getxMax(), that.getyMin());
@@ -50,8 +81,11 @@ public class Circle extends Graph{
                 || L3.isIntersected(this) || L4.isIntersected(this) ;
     }
 
-    @Override
-    // @JiaoZhiyang, checked and modify by HanJiaming
+    /**
+     * @param that circle
+     * @return boolean
+     */
+
     public boolean isIntersected(Circle that) {
         double deltaY=Math.abs(that.getLocation().getY() - getLocation().getY());
         double deltaX=Math.abs(that.getLocation().getX() - getLocation().getX());
@@ -61,11 +95,14 @@ public class Circle extends Graph{
     }
 
     private boolean inCircle(Point p){
-        return (p.getX() - location.getX()) * (p.getX() - location.getX()) + (p.getY() - location.getY()) * (p.getY() - location.getY()) - getR() * getR() <= 0;
+        return (p.getX() - getLocation().getX()) * (p.getX() - getLocation().getX()) + (p.getY() - getLocation().getY()) * (p.getY() - getLocation().getY()) - getR() * getR() <= 0;
 
     }
-    @Override
-    // @JiaoZhiyang ,checked and modify by HanJiaming
+
+    /**
+     * @param that line
+     * @return boolean
+     */
     public boolean isIntersected(Line that) {
 
         Point p1 = new Point(that.getLocation().getX(), that.getLocation().getY());
@@ -76,8 +113,8 @@ public class Circle extends Graph{
         if (inCircle(p1) && !inCircle(p2)) return true;
 
         double u,v,w,d1,d2,a1,a2;
-        double x = location.getX();
-        double y = location.getY();
+        double x = getLocation().getX();
+        double y = getLocation().getY();
 
         if(p1.getX() == p2.getX()) {u=1;v=0;w= -p1.getX();}
         else if(p1.getY() == p2.getY()) {u=0;v=1;w= -p1.getY();}
@@ -96,12 +133,17 @@ public class Circle extends Graph{
         return a1 > 0 && a2 > 0;
     }
 
-    @Override
-    // @HanJiaming
+    /**
+     * @param that square
+     * @return boolean
+     */
     public boolean isIntersected(Square that) {
         return isIntersected(new Rectangle("",that.getLocation(), that.getWidth(), that.getHeight()));
     }
 
+    /**
+     * @return the round
+     */
     public double getR() {
         return r;
     }

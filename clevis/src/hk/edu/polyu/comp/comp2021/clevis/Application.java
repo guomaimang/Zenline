@@ -132,6 +132,9 @@ public class Application {
                 if (isInc) System.out.println("They are intersected");
                 else System.out.println("They are not intersected");
                 break;
+
+
+
             }
             case "list":{
                 Clevis.list(s.getName());
