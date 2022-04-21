@@ -1,1 +1,3 @@
-# furry-octo-palm-tree
+# Zenline
+
+A command line drawing program implemented by java
